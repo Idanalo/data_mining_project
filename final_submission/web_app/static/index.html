@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actor Network Community Explorer</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- D3.js v7 for Force-Directed Graphs -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="app-brand">
+      <div class="brand-icon">🌐</div>
+      <div>
+        <div class="brand-title">Actor Network Community Explorer</div>
+        <div class="brand-subtitle">Temporal Graph Community Detection & Tag Analytics</div>
+      </div>
+    </div>
+    <div style="font-size: 13px; color: var(--text-muted); text-align: right;">
+      Data Mining Project Submission
+    </div>
+  </header>
+
+  <!-- Controls Panel -->
+  <section class="controls-panel">
+    <div class="control-group">
+      <div class="control-label">
+        <span>Temporal Cutoff Year</span>
+        <span id="year-value" class="slider-val">2010</span>
+      </div>
+      <input type="range" id="year-slider" min="1920" max="2026" value="2010" step="1">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">Min Collaboration Weight</div>
+      <select id="min-weight-select">
+        <option value="1">1+ Shared Movie (Full)</option>
+        <option value="2" selected>2+ Shared Movies (Core)</option>
+        <option value="3">3+ Shared Movies (Tight)</option>
+        <option value="5">5+ Shared Movies (Veterans)</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">Max Communities</div>
+      <select id="max-comm-select">
+        <option value="6">Top 6</option>
+        <option value="10" selected>Top 10</option>
+        <option value="15">Top 15</option>
+      </select>
+    </div>
+
+    <button id="btn-run-clustering" class="btn-primary">
+      <span>⚡ Run Clustering</span>
+    </button>
+  </section>
+
+  <!-- KPI Summary Dashboard -->
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-title">Active Actors (Nodes)</div>
+      <div id="kpi-nodes" class="kpi-value">0</div>
+      <div class="kpi-sub">In temporal graph</div>
+    </div>
+
+    <div class="kpi-card purple">
+      <div class="kpi-title">Co-star Connections (Edges)</div>
+      <div id="kpi-edges" class="kpi-value">0</div>
+      <div class="kpi-sub">Collaborations up to year</div>
+    </div>
+
+    <div class="kpi-card emerald">
+      <div class="kpi-title">Communities Detected</div>
+      <div id="kpi-comms" class="kpi-value">0</div>
+      <div class="kpi-sub">Louvain algorithm</div>
+    </div>
+
+    <div class="kpi-card amber">
+      <div class="kpi-title">Graph Modularity Score</div>
+      <div id="kpi-modularity" class="kpi-value">0.00</div>
+      <div class="kpi-sub">Community partition quality</div>
+    </div>
+  </section>
+
+  <!-- Inter-Community Connection Matrix -->
+  <section id="matrix-container" class="matrix-container"></section>
+
+  <!-- Detected Communities Grid -->
+  <section>
+    <div class="section-title">
+      <span>Detected Hollywood Communities & Tag Profiles</span>
+    </div>
+    <div id="community-grid" class="community-grid"></div>
+  </section>
+
+  <!-- Full-Screen Community Inspector Modal -->
+  <div id="community-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div id="modal-title" class="modal-title">Community Inspection</div>
+        <button id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="viz-container">
+          <div id="graph-canvas"></div>
+        </div>
+        <div class="sidebar-panel">
+          <div id="sidebar-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/graph_viz.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
