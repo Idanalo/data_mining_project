@@ -28,9 +28,11 @@ static_dir = web_app_dir / "static"
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 class ClusterRequest(BaseModel):
-    year: int = 2010
+    created_before: int = 2010
+    active_after: int = 1800
     min_weight: int = 1
     max_communities: int = 15
+    year: int | None = None  # Backwards compatibility alias for created_before
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
@@ -41,19 +43,22 @@ async def serve_index():
 
 @app.get("/api/years")
 async def get_available_years():
-    """Returns year boundaries for the UI slider."""
+    """Returns year boundaries for the UI sliders."""
     return {
         "min_year": 1920,
         "max_year": 2026,
-        "default_year": 2010
+        "default_created_before": 2010,
+        "default_active_after": 1800
     }
 
 @app.post("/api/cluster")
 async def run_clustering_endpoint(req: ClusterRequest):
-    """Executes graph community clustering for the specified cutoff year."""
+    """Executes graph community clustering with dual-way temporal edge filtering (created_before & active_after)."""
     try:
+        created_before_year = req.year if req.year is not None else req.created_before
         results = clusterer.run_clustering(
-            target_year=req.year,
+            created_before=created_before_year,
+            active_after=req.active_after,
             min_weight=req.min_weight,
             max_communities=req.max_communities
         )
@@ -63,21 +68,34 @@ async def run_clustering_endpoint(req: ClusterRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/community/{year}/{community_id}")
+@app.get("/api/community/{created_before}/{community_id}")
 async def get_community_details_endpoint(
-    year: int,
+    created_before: int,
     community_id: int,
+    active_after: int = Query(default=1800),
     min_weight: int = Query(default=1, ge=1),
     max_nodes: int = Query(default=150, le=500)
 ):
     """Fetches sub-graph nodes and edges for D3 visualization of a specific community."""
     try:
         res = clusterer.get_community_graph_details(
-            target_year=year,
+            created_before=created_before,
+            active_after=active_after,
             community_id=community_id,
             min_weight=min_weight,
             max_nodes=max_nodes
         )
+        if "error" in res:
+            raise HTTPException(status_code=404, detail=res["error"])
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/actor/{nconst}")
+async def get_actor_statistics_endpoint(nconst: str):
+    """Fetches comprehensive actor statistics including genre profile, geographical tag, and co-star network."""
+    try:
+        res = clusterer.get_actor_statistics(nconst=nconst)
         if "error" in res:
             raise HTTPException(status_code=404, detail=res["error"])
         return res

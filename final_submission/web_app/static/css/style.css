@@ -79,6 +79,7 @@ body {
   font-weight: 700;
   background: linear-gradient(90deg, #ffffff, var(--accent-cyan));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -96,8 +97,8 @@ body {
   padding: 20px 28px;
   margin-bottom: 28px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
-  gap: 24px;
+  grid-template-columns: 2fr 2fr 1fr 1fr auto;
+  gap: 20px;
   align-items: center;
 }
 
@@ -274,6 +275,30 @@ select:focus, input[type="number"]:focus {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 8px;
+}
+
+/* Geographical Tag Styles */
+.geo-tag-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.geo-tag-badge {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.geo-hub-chip {
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .comm-stats-row {

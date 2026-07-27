@@ -7,6 +7,11 @@ class CommunityGraphViz {
     this.simulation = null;
     this.width = 0;
     this.height = 0;
+    this.onNodeClick = null;
+  }
+
+  setNodeClickListener(callback) {
+    this.onNodeClick = callback;
   }
 
   init() {
@@ -61,22 +66,34 @@ class CommunityGraphViz {
 
     // Render Nodes
     const node = this.g.append('g')
-      .selectAll('g')
+      .selectAll('g.node-group')
       .data(nodes)
       .enter()
       .append('g')
+      .attr('class', 'node-group')
       .call(d3.drag()
         .on('start', (event, d) => this.dragstarted(event, d))
         .on('drag', (event, d) => this.dragged(event, d))
         .on('end', (event, d) => this.dragended(event, d))
       );
 
+    node.style('cursor', 'pointer')
+      .on('click', (event, d) => {
+        event.stopPropagation();
+        node.selectAll('circle')
+          .attr('stroke', n => n.id === d.id ? '#fbbf24' : '#ffffff')
+          .attr('stroke-width', n => n.id === d.id ? 3.5 : 1.5);
+        if (this.onNodeClick) {
+          this.onNodeClick(d);
+        }
+      });
+
     node.append('circle')
       .attr('r', d => Math.max(Math.sqrt(d.degree || 1) * 3 + 4, 5))
-      .attr('fill', d => d.degree > 10 ? '#38bdf8' : '#818cf8')
+      .attr('fill', d => d.sub_community_color || '#38bdf8')
       .attr('stroke', '#ffffff')
       .attr('stroke-width', 1.5)
-      .style('filter', 'drop-shadow(0 0 6px rgba(56, 189, 248, 0.5))');
+      .style('filter', d => `drop-shadow(0 0 6px ${d.sub_community_color || '#38bdf8'})`);
 
     // Labels
     node.append('text')
@@ -90,7 +107,7 @@ class CommunityGraphViz {
 
     // Title / Tooltip
     node.append('title')
-      .text(d => `${d.label}\nDegree: ${d.degree}\nProfessions: ${d.professions ? d.professions.join(', ') : 'None'}`);
+      .text(d => `${d.label} (Sub-Community #${d.sub_community_id || 1})\nDegree: ${d.degree}\nProfessions: ${d.professions ? d.professions.join(', ') : 'None'}`);
 
     this.simulation.on('tick', () => {
       link
@@ -119,5 +136,20 @@ class CommunityGraphViz {
     if (!event.active) this.simulation.alphaTarget(0);
     d.fx = null;
     d.fy = null;
+  }
+
+  highlightSubCommunity(subId) {
+    if (!this.g) return;
+    if (!subId) {
+      this.g.selectAll('g.node-group').style('opacity', 1);
+      this.g.selectAll('line').style('opacity', 1);
+      return;
+    }
+
+    this.g.selectAll('g.node-group')
+      .style('opacity', d => (d.sub_community_id === subId) ? 1 : 0.12);
+
+    this.g.selectAll('line')
+      .style('opacity', e => (e.source.sub_community_id === subId && e.target.sub_community_id === subId) ? 0.9 : 0.06);
   }
 }

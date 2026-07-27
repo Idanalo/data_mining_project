@@ -3,6 +3,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const yearSlider = document.getElementById('year-slider');
   const yearValue = document.getElementById('year-value');
+  const activeAfterSlider = document.getElementById('active-after-slider');
+  const activeAfterValue = document.getElementById('active-after-value');
+
   const minWeightSelect = document.getElementById('min-weight-select');
   const maxCommSelect = document.getElementById('max-comm-select');
   const btnRun = document.getElementById('btn-run-clustering');
@@ -24,9 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentClusterData = null;
   const graphViz = new CommunityGraphViz('graph-canvas');
 
-  // Sync Slider Value Display
+  // Sync Slider Value Displays
   yearSlider.addEventListener('input', (e) => {
     yearValue.textContent = e.target.value;
+  });
+
+  activeAfterSlider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    activeAfterValue.textContent = val <= 1800 ? 'All Time (1800)' : val;
   });
 
   // Run Clustering Button Action
@@ -44,15 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       yearSlider.min = data.min_year;
       yearSlider.max = data.max_year;
-      yearSlider.value = data.default_year;
-      yearValue.textContent = data.default_year;
+      yearSlider.value = data.default_created_before || 2010;
+      yearValue.textContent = yearSlider.value;
+
+      activeAfterSlider.min = 1800;
+      activeAfterSlider.max = data.max_year;
+      activeAfterSlider.value = data.default_active_after || 1800;
+      activeAfterValue.textContent = activeAfterSlider.value <= 1800 ? 'All Time (1800)' : activeAfterSlider.value;
     } catch (err) {
       console.error('Failed to fetch years:', err);
     }
   }
 
   async function runClustering() {
-    const year = parseInt(yearSlider.value);
+    const createdBefore = parseInt(yearSlider.value);
+    const activeAfter = parseInt(activeAfterSlider.value);
     const minWeight = parseInt(minWeightSelect.value);
     const maxCommunities = parseInt(maxCommSelect.value);
 
@@ -64,7 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          year: year,
+          created_before: createdBefore,
+          active_after: activeAfter,
           min_weight: minWeight,
           max_communities: maxCommunities
         })
@@ -107,6 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'comm-card';
 
+      // Geographical Tag Badge HTML
+      const geoTag = c.geo_tag || { region: 'Global Cinema', flag: '🌐', primary_hub: 'International', geo_summary: '' };
+      const geoHtml = `
+        <div class="geo-tag-bar">
+          <span class="geo-tag-badge">${geoTag.flag} ${geoTag.region}</span>
+          <span class="geo-hub-chip">📍 ${geoTag.primary_hub}</span>
+        </div>
+      `;
+
       // Tag Pills HTML
       const tagsHtml = (c.profession_tags || []).slice(0, 4).map(t => 
         `<span class="tag-pill">${t.tag}<span class="pct">${t.percentage}%</span></span>`
@@ -138,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="comm-archetype">${c.archetype}</div>
           
+          ${geoHtml}
+
           <div class="comm-stats-row">
             <span>👥 ${c.node_count} Actors</span>
             <span>🔗 ${c.internal_edges} Intra-Edges</span>
@@ -202,33 +228,74 @@ document.addEventListener('DOMContentLoaded', () => {
     matrixContainer.innerHTML = html;
   }
 
+  let activeCommunitySummary = null;
+  let activeCommunityNodes = [];
+
+  // Connect graph node click listener to actor stats inspector
+  graphViz.setNodeClickListener((nodeData) => {
+    fetchAndRenderActorStats(nodeData.id);
+  });
+
   // Open Community Modal & Fetch Graph
   async function openCommunityModal(commId) {
-    const year = parseInt(yearSlider.value);
+    const createdBefore = parseInt(yearSlider.value);
+    const activeAfter = parseInt(activeAfterSlider.value);
     const minWeight = parseInt(minWeightSelect.value);
 
     modalTitle.textContent = `Community #${commId} Inspection & Bridges`;
     modalOverlay.classList.add('active');
 
-    sidebarContent.innerHTML = '<div style="color:var(--text-muted);">Loading community subgraph...</div>';
+    sidebarContent.innerHTML = '<div style="color:var(--text-muted); padding:20px;">Loading community subgraph...</div>';
 
     try {
-      const res = await fetch(`/api/community/${year}/${commId}?min_weight=${minWeight}`);
+      const res = await fetch(`/api/community/${createdBefore}/${commId}?active_after=${activeAfter}&min_weight=${minWeight}`);
       const data = await res.json();
 
-      // Render D3 Graph
+      // Render D3 Graph with sub-community colored bubbles
       graphViz.render(data);
 
-      // Render Sidebar Details
-      renderSidebarDetails(data.community_summary, data.nodes);
+      // Save state and render Sidebar Details including sub-communities
+      activeCommunitySummary = data.community_summary;
+      activeCommunityNodes = data.nodes;
+      renderSidebarDetails(data.community_summary, data.nodes, data.sub_communities);
     } catch (err) {
       console.error('Failed to load community graph:', err);
-      sidebarContent.innerHTML = '<div style="color:var(--accent-rose);">Failed to load graph data.</div>';
+      sidebarContent.innerHTML = '<div style="color:var(--accent-rose); padding:20px;">Failed to load graph data.</div>';
     }
   }
 
-  function renderSidebarDetails(summary, nodes) {
+  function renderSidebarDetails(summary, nodes, subCommunities = []) {
     if (!summary) return;
+
+    const geo = summary.geo_tag || { region: 'Global Cinema', flag: '🌐', primary_hub: 'International', geo_summary: '', regional_distribution: [] };
+
+    const regDistHtml = (geo.regional_distribution || []).map(r => `
+      <div class="genre-row" style="margin-bottom:6px;">
+        <div class="genre-info">
+          <span>${r.flag} ${r.region}</span>
+          <span style="color:var(--accent-cyan); font-weight:700;">${r.percentage}%</span>
+        </div>
+        <div class="genre-bar-bg">
+          <div class="genre-bar-fill" style="width: ${r.percentage}%; background: linear-gradient(90deg, #38bdf8, #818cf8);"></div>
+        </div>
+      </div>
+    `).join('');
+
+    const subCommHtml = (subCommunities || []).map(sc => `
+      <div class="sub-comm-card-item" data-sub-id="${sc.sub_id}" style="border-left:4px solid ${sc.color}; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:6px; margin-bottom:6px; cursor:pointer;" title="Hover/Click to highlight this inner sub-community">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; color:#fff; font-size:13px;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${sc.color}; margin-right:6px;"></span>
+            Sub-Circle #${sc.sub_id}
+          </span>
+          <span style="color:${sc.color}; font-weight:800; font-size:12px;">${sc.node_count} actors (${sc.percentage}%)</span>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${sc.archetype}</div>
+        <div style="font-size:11px; color:var(--text-dim); margin-top:3px;">
+          Key Stars: ${(sc.top_actors || []).slice(0, 3).map(a => a.name).join(', ')}
+        </div>
+      </div>
+    `).join('') || '<div style="color:var(--text-muted); font-size:12px;">No sub-communities detected.</div>';
 
     const bridgesHtml = (summary.bridges || []).map(b => 
       `<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:13px;">
@@ -238,10 +305,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ).join('') || '<div style="color:var(--text-muted); font-size:12px;">No major inter-community bridges.</div>';
 
     const topMembersHtml = (nodes || []).slice(0, 15).map(n => 
-      `<div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
-        <span style="color:#ffffff;">${n.label}</span>
-        <span style="color:var(--text-muted);">${n.degree} connections</span>
+      `<div class="actor-row-clickable" data-nconst="${n.id}" style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; padding:4px 8px; background:rgba(255,255,255,0.03); border-radius:4px; cursor:pointer;" title="Click to view full actor statistics">
+        <span style="color:#ffffff; font-weight:600;">
+          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${n.sub_community_color || '#38bdf8'}; margin-right:4px;"></span>
+          ${n.label}
+        </span>
+        <span style="color:var(--accent-cyan); font-weight:700;">${n.degree} links</span>
       </div>`
+    ).join('');
+
+    const actorOptionsHtml = (nodes || []).map(n => 
+      `<option value="${n.id}">${n.label} (${n.degree} links)</option>`
     ).join('');
 
     sidebarContent.innerHTML = `
@@ -249,6 +323,30 @@ document.addEventListener('DOMContentLoaded', () => {
         <h4>Archetype</h4>
         <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">${summary.archetype}</div>
         <div style="font-size:13px; color:var(--text-muted);">Members: ${summary.node_count} | Intra Edges: ${summary.internal_edges}</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🧩 Sub-Communities (Inner Circles)</h4>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Hover or click a sub-community to filter network bubbles:</div>
+        <div>${subCommHtml}</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>👤 Inspect Actor Statistics</h4>
+        <select id="actor-select-dropdown" style="width:100%; margin-bottom:6px;">
+          <option value="">-- Select Actor for Deep Dive --</option>
+          ${actorOptionsHtml}
+        </select>
+        <div style="font-size:11px; color:var(--text-dim);">💡 Tip: Click any node circle in graph to view actor stats.</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🌍 Geographical Profile</h4>
+        <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:4px;">${geo.flag} ${geo.region}</div>
+        <div style="font-size:12px; color:var(--accent-cyan); margin-bottom:8px;">📍 Hub: ${geo.primary_hub}</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px; line-height:1.4;">${geo.geo_summary}</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Regional Distribution:</div>
+        <div>${regDistHtml}</div>
       </div>
 
       <div class="sidebar-section">
@@ -261,6 +359,142 @@ document.addEventListener('DOMContentLoaded', () => {
         <div>${topMembersHtml}</div>
       </div>
     `;
+
+    // Sub-Community Card Hover & Click Listeners
+    sidebarContent.querySelectorAll('.sub-comm-card-item').forEach(el => {
+      const subId = parseInt(el.getAttribute('data-sub-id'));
+      el.addEventListener('mouseenter', () => {
+        graphViz.highlightSubCommunity(subId);
+      });
+      el.addEventListener('mouseleave', () => {
+        graphViz.highlightSubCommunity(null);
+      });
+      el.addEventListener('click', () => {
+        graphViz.highlightSubCommunity(subId);
+      });
+    });
+
+    // Dropdown Listener
+    const dropdown = document.getElementById('actor-select-dropdown');
+    if (dropdown) {
+      dropdown.addEventListener('change', (e) => {
+        if (e.target.value) fetchAndRenderActorStats(e.target.value);
+      });
+    }
+
+    // Top Member Row Click Listeners
+    sidebarContent.querySelectorAll('.actor-row-clickable').forEach(el => {
+      el.addEventListener('click', () => {
+        const nconst = el.getAttribute('data-nconst');
+        if (nconst) fetchAndRenderActorStats(nconst);
+      });
+    });
+  }
+
+  async function fetchAndRenderActorStats(nconst) {
+    sidebarContent.innerHTML = `<div style="color:var(--text-muted); padding:20px; text-align:center;">Fetching detailed statistics for actor...</div>`;
+
+    try {
+      const res = await fetch(`/api/actor/${nconst}`);
+      const data = await res.json();
+      renderActorStatsSidebar(data);
+    } catch (err) {
+      console.error('Failed to fetch actor stats:', err);
+      sidebarContent.innerHTML = `<div style="color:var(--accent-rose); padding:20px;">Failed to load actor statistics.</div>`;
+    }
+  }
+
+  function renderActorStatsSidebar(stats) {
+    const geo = stats.geo_tag || { region: 'Global Cinema', flag: '🌐', primary_hub: 'International', geo_summary: '' };
+
+    const genresHtml = (stats.genre_profile || []).map(g => `
+      <div class="genre-row" style="margin-bottom:6px;">
+        <div class="genre-info">
+          <span>${g.genre}</span>
+          <span style="color:var(--accent-cyan); font-weight:700;">${g.percentage}%</span>
+        </div>
+        <div class="genre-bar-bg">
+          <div class="genre-bar-fill" style="width: ${g.percentage}%; background: linear-gradient(90deg, #34d399, #38bdf8);"></div>
+        </div>
+      </div>
+    `).join('') || '<div style="color:var(--text-muted); font-size:12px;">No genre data available.</div>';
+
+    const coStarsHtml = (stats.top_co_stars || []).map(cs => `
+      <div class="actor-row-clickable" data-nconst="${cs.nconst}" style="display:flex; justify-content:space-between; font-size:12px; padding:6px 10px; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.2); border-radius:6px; margin-bottom:4px; cursor:pointer;" title="Click to view stats for ${cs.name}">
+        <span style="color:#fff; font-weight:600;">🌟 ${cs.name}</span>
+        <span style="color:var(--accent-amber); font-weight:700;">${cs.shared_movies_count} movies</span>
+      </div>
+    `).join('') || '<div style="color:var(--text-muted); font-size:12px;">No co-stars recorded.</div>';
+
+    const filmographyHtml = (stats.top_movies || []).map(m => `
+      <div style="font-size:12px; margin-bottom:8px; background:rgba(255,255,255,0.03); padding:6px 10px; border-radius:6px;">
+        <div style="color:#fff; font-weight:700;">🎬 ${m.title} <span style="color:var(--accent-cyan);">(${m.year || 'N/A'})</span></div>
+        <div style="font-size:11px; color:var(--text-muted);">${(m.genres || []).join(', ')}</div>
+      </div>
+    `).join('') || '<div style="color:var(--text-muted); font-size:12px;">No filmography recorded.</div>';
+
+    sidebarContent.innerHTML = `
+      <button id="btn-back-summary" class="btn-primary" style="padding:8px 14px; font-size:12px; margin-bottom:16px; width:100%; background:rgba(255,255,255,0.08); border:1px solid var(--border-color);">
+        ⬅️ Back to Community Summary
+      </button>
+
+      <div class="sidebar-section">
+        <h4 style="color:var(--accent-amber);">Actor Profile</h4>
+        <div style="font-size:20px; font-weight:800; color:#fff; margin-bottom:2px;">${stats.name}</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
+          ${(stats.professions || []).map(p => p.toUpperCase()).join(' • ') || 'ACTOR'} | Active: ${stats.active_years}
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🌍 Geographical Profile</h4>
+        <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:2px;">${geo.flag} ${geo.region}</div>
+        <div style="font-size:12px; color:var(--accent-cyan); margin-bottom:6px;">📍 Hub: ${geo.primary_hub}</div>
+        <div style="font-size:12px; color:var(--text-muted); line-height:1.4;">${geo.geo_summary}</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>📊 Network Centrality Stats</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; text-align:center;">
+          <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+            <div style="color:var(--accent-cyan); font-weight:800; font-size:18px;">${stats.network_stats.total_co_stars}</div>
+            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase;">Co-Stars</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+            <div style="color:var(--accent-purple); font-weight:800; font-size:18px;">${stats.network_stats.total_collaborations}</div>
+            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase;">Collaborations</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🎬 Genre Distribution</h4>
+        <div>${genresHtml}</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>🤝 Top Collaborators</h4>
+        <div>${coStarsHtml}</div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>📽️ Notable Filmography</h4>
+        <div>${filmographyHtml}</div>
+      </div>
+    `;
+
+    document.getElementById('btn-back-summary').addEventListener('click', () => {
+      if (activeCommunitySummary && activeCommunityNodes) {
+        renderSidebarDetails(activeCommunitySummary, activeCommunityNodes);
+      }
+    });
+
+    sidebarContent.querySelectorAll('.actor-row-clickable').forEach(el => {
+      el.addEventListener('click', () => {
+        const nconst = el.getAttribute('data-nconst');
+        if (nconst) fetchAndRenderActorStats(nconst);
+      });
+    });
   }
 
   // Close Modal

@@ -32,14 +32,22 @@
   <section class="controls-panel">
     <div class="control-group">
       <div class="control-label">
-        <span>Temporal Cutoff Year</span>
+        <span>Created On/Before (XXXX)</span>
         <span id="year-value" class="slider-val">2010</span>
       </div>
       <input type="range" id="year-slider" min="1920" max="2026" value="2010" step="1">
     </div>
 
     <div class="control-group">
-      <div class="control-label">Min Collaboration Weight</div>
+      <div class="control-label">
+        <span>Active On/After (YYYY)</span>
+        <span id="active-after-value" class="slider-val">All Time (1800)</span>
+      </div>
+      <input type="range" id="active-after-slider" min="1800" max="2026" value="1800" step="1">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">Min Weight</div>
       <select id="min-weight-select">
         <option value="1">1+ Shared Movie (Full)</option>
         <option value="2" selected>2+ Shared Movies (Core)</option>
