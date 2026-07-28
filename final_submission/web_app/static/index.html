@@ -28,6 +28,14 @@
     </div>
   </header>
 
+  <!-- Tab Navigation -->
+  <nav class="app-tabs">
+    <button class="tab-btn active" data-target="community-view">Community Explorer</button>
+    <button class="tab-btn" data-target="median-view">Top 5 Median Actors</button>
+  </nav>
+
+  <div id="community-view" class="tab-pane active">
+
   <!-- Controls Panel -->
   <section class="controls-panel">
     <div class="control-group">
@@ -107,6 +115,51 @@
     </div>
     <div id="community-grid" class="community-grid"></div>
   </section>
+  </div> <!-- end community-view -->
+
+  <div id="median-view" class="tab-pane" style="display: none;">
+    <section class="controls-panel">
+      <div class="control-group">
+        <div class="control-label">
+          <input type="checkbox" id="median-all-data" style="margin-right: 8px;">
+          <label for="median-all-data">Calculate on all data (No year restriction)</label>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <div class="control-label">
+          <span>Start Year</span>
+          <span id="median-start-value" class="slider-val">2000</span>
+        </div>
+        <input type="range" id="median-start-slider" min="1920" max="2026" value="2000" step="1">
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>End Year</span>
+          <span id="median-end-value" class="slider-val">2026</span>
+        </div>
+        <input type="range" id="median-end-slider" min="1920" max="2026" value="2026" step="1">
+      </div>
+
+      <button id="btn-run-median" class="btn-primary">
+        <span>⚡ Find Median Actors</span>
+      </button>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <span>Top 5 Median Actors (Shortest Average Path)</span>
+      </div>
+      <div id="median-loading" style="display: none; padding: 40px; text-align: center; color: var(--text-muted);">
+        <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+        Computing shortest paths for top candidates... This may take a moment.
+      </div>
+      <div id="median-results-grid" class="community-grid">
+        <!-- Results will be injected here -->
+      </div>
+    </section>
+  </div> <!-- end median-view -->
 
   <!-- Full-Screen Community Inspector Modal -->
   <div id="community-modal" class="modal-overlay">

@@ -167,6 +167,79 @@ select:focus, input[type="number"]:focus {
   box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
 }
 
+/* Tabs Navigation */
+.app-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.tab-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Median Actor Results */
+.median-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.median-rank {
+  font-size: 48px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.1);
+  margin-bottom: -15px;
+}
+
+.median-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.median-path {
+  font-size: 14px;
+  color: var(--accent-emerald);
+  font-weight: 600;
+  background: rgba(52, 211, 153, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
 /* KPI Summary Dashboard */
 .kpi-grid {
   display: grid;

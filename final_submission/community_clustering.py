@@ -739,6 +739,98 @@ class CommunityClusterer:
             "lookup_time_seconds": round(elapsed, 2)
         }
 
+    def calculate_median_actors(self, start_year=None, end_year=None, top_k=5, candidate_count=100):
+        """
+        Calculates the top K 'median' actors (actors with the minimum sum of shortest unweighted paths 
+        to all other actors in the largest connected component of the graph).
+        Uses a degree-based pre-filtering to compute shortest paths only for top `candidate_count` nodes 
+        to ensure fast execution.
+        """
+        t0 = time.time()
+        
+        df_edges = pl.read_csv(
+            self.edges_path,
+            separator='\t',
+            columns=['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'],
+            quote_char=None,
+            schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'shared_movies': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
+            null_values=['\\N']
+        )
+        
+        filtered = df_edges
+        if start_year is not None:
+            filtered = filtered.filter(pl.col('startYear') >= start_year)
+        if end_year is not None:
+            filtered = filtered.filter(pl.col('startYear') <= end_year)
+            
+        valid_rows = list(filtered.iter_rows())
+        
+        G = nx.Graph()
+        for row in valid_rows:
+            a1, a2, movies_str, yr, weight = row
+            # Adding unweighted edge for median calculation
+            G.add_edge(a1, a2)
+            
+        if G.number_of_nodes() == 0:
+            return {"error": "No edges found for the given year range."}
+            
+        # Get largest connected component
+        lcc_nodes = max(nx.connected_components(G), key=len)
+        subG = G.subgraph(lcc_nodes)
+        
+        # Candidate pre-filtering: find nodes with highest degree in the LCC
+        degrees = dict(subG.degree())
+        candidates = sorted(degrees.keys(), key=lambda x: degrees[x], reverse=True)[:candidate_count]
+        
+        median_scores = []
+        
+        for candidate in candidates:
+            # Calculate shortest paths from the candidate to all nodes in the LCC
+            lengths = nx.single_source_shortest_path_length(subG, candidate)
+            # Sum of all unweighted path lengths
+            path_sum = sum(lengths.values())
+            # Calculate closeness centrality equivalent: (N-1) / path_sum
+            # Wait, average shortest path is path_sum / (N-1)
+            avg_path = path_sum / (len(lcc_nodes) - 1) if len(lcc_nodes) > 1 else 0
+            
+            median_scores.append({
+                "nconst": candidate,
+                "path_sum": path_sum,
+                "avg_path": avg_path
+            })
+            
+        # Sort candidates by minimum average path (or sum)
+        median_scores.sort(key=lambda x: x["path_sum"])
+        top_medians = median_scores[:top_k]
+        
+        # Fetch metadata
+        top_nconsts = [item["nconst"] for item in top_medians]
+        self.fetch_metadata_for_targets(top_nconsts, [])
+        
+        results = []
+        for rank, item in enumerate(top_medians, start=1):
+            nconst = item["nconst"]
+            results.append({
+                "rank": rank,
+                "nconst": nconst,
+                "name": self.actor_names_cache.get(nconst, nconst),
+                "professions": self.actor_professions_cache.get(nconst, []),
+                "avg_path": round(item["avg_path"], 4),
+                "total_path_sum": item["path_sum"]
+            })
+            
+        elapsed = time.time() - t0
+        
+        return {
+            "start_year": start_year,
+            "end_year": end_year,
+            "nodes_in_component": len(lcc_nodes),
+            "total_nodes": G.number_of_nodes(),
+            "execution_time_seconds": round(elapsed, 2),
+            "top_medians": results
+        }
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Temporal Graph Community Clustering Tool")
     parser.add_argument("--year", type=int, default=2010, help="Target cutoff year")

@@ -27,6 +27,99 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentClusterData = null;
   const graphViz = new CommunityGraphViz('graph-canvas');
 
+  // Tab Switching Logic
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.getAttribute('data-target')).classList.add('active');
+    });
+  });
+
+  // Median Actors Logic
+  const medianAllDataCheckbox = document.getElementById('median-all-data');
+  const medianStartSlider = document.getElementById('median-start-slider');
+  const medianStartValue = document.getElementById('median-start-value');
+  const medianEndSlider = document.getElementById('median-end-slider');
+  const medianEndValue = document.getElementById('median-end-value');
+  const btnRunMedian = document.getElementById('btn-run-median');
+  const medianLoading = document.getElementById('median-loading');
+  const medianResultsGrid = document.getElementById('median-results-grid');
+
+  medianStartSlider.addEventListener('input', (e) => {
+    medianStartValue.textContent = e.target.value;
+  });
+
+  medianEndSlider.addEventListener('input', (e) => {
+    medianEndValue.textContent = e.target.value;
+  });
+
+  medianAllDataCheckbox.addEventListener('change', (e) => {
+    const isChecked = e.target.checked;
+    medianStartSlider.disabled = isChecked;
+    medianEndSlider.disabled = isChecked;
+  });
+
+  btnRunMedian.addEventListener('click', async () => {
+    const isAllData = medianAllDataCheckbox.checked;
+    const startYear = isAllData ? null : parseInt(medianStartSlider.value);
+    const endYear = isAllData ? null : parseInt(medianEndSlider.value);
+
+    btnRunMedian.innerHTML = '⚡ Computing...';
+    btnRunMedian.disabled = true;
+    medianResultsGrid.innerHTML = '';
+    medianLoading.style.display = 'block';
+
+    try {
+      const res = await fetch('/api/median_actors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ start_year: startYear, end_year: endYear, top_k: 5 })
+      });
+      const data = await res.json();
+      
+      medianLoading.style.display = 'none';
+      if (data.error) {
+        medianResultsGrid.innerHTML = `<div style="color:var(--accent-rose); padding:20px;">${data.error}</div>`;
+      } else {
+        renderMedianResults(data.top_medians);
+      }
+    } catch (err) {
+      medianLoading.style.display = 'none';
+      medianResultsGrid.innerHTML = `<div style="color:var(--accent-rose); padding:20px;">Error: ${err.message}</div>`;
+    } finally {
+      btnRunMedian.innerHTML = '<span>⚡ Find Median Actors</span>';
+      btnRunMedian.disabled = false;
+    }
+  });
+
+  function renderMedianResults(medians) {
+    if (!medians || medians.length === 0) {
+      medianResultsGrid.innerHTML = '<div style="color:var(--text-muted); padding:20px;">No actors found for this selection.</div>';
+      return;
+    }
+
+    const html = medians.map(m => `
+      <div class="comm-card median-card">
+        <div class="median-rank">#${m.rank}</div>
+        <div class="median-name">${m.name}</div>
+        <div class="median-path">Avg Path: ${m.avg_path}</div>
+        <div style="font-size:12px; color:var(--text-muted);">
+          Total Path Sum: ${m.total_path_sum.toLocaleString()}
+        </div>
+        <div style="font-size:11px; color:var(--text-dim); margin-top:8px;">
+          ${(m.professions || []).join(' • ').toUpperCase()}
+        </div>
+      </div>
+    `).join('');
+
+    medianResultsGrid.innerHTML = html;
+  }
+
   // Sync Slider Value Displays
   yearSlider.addEventListener('input', (e) => {
     yearValue.textContent = e.target.value;

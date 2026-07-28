@@ -34,6 +34,11 @@ class ClusterRequest(BaseModel):
     max_communities: int = 15
     year: int | None = None  # Backwards compatibility alias for created_before
 
+class MedianRequest(BaseModel):
+    start_year: int | None = None
+    end_year: int | None = None
+    top_k: int = 5
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
     index_file = static_dir / "index.html"
@@ -98,6 +103,21 @@ async def get_actor_statistics_endpoint(nconst: str):
         res = clusterer.get_actor_statistics(nconst=nconst)
         if "error" in res:
             raise HTTPException(status_code=404, detail=res["error"])
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/median_actors")
+async def get_median_actors_endpoint(req: MedianRequest):
+    """Calculates the top median actors for a given year range."""
+    try:
+        res = clusterer.calculate_median_actors(
+            start_year=req.start_year,
+            end_year=req.end_year,
+            top_k=req.top_k
+        )
+        if "error" in res:
+            raise HTTPException(status_code=400, detail=res["error"])
         return res
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
