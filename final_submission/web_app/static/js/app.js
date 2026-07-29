@@ -36,7 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
       tabBtns.forEach(b => b.classList.remove('active'));
       tabPanes.forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById(btn.getAttribute('data-target')).classList.add('active');
+      const targetId = btn.getAttribute('data-target');
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) targetPane.classList.add('active');
+
+      if (targetId === 'median-view') {
+        if (!medianResultsGrid.children.length || medianResultsGrid.innerHTML.trim() === '') {
+          fetchMedianActors();
+        }
+      }
     });
   });
 
@@ -64,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     medianEndSlider.disabled = isChecked;
   });
 
-  btnRunMedian.addEventListener('click', async () => {
+  async function fetchMedianActors() {
     const isAllData = medianAllDataCheckbox.checked;
     const startYear = isAllData ? null : parseInt(medianStartSlider.value);
     const endYear = isAllData ? null : parseInt(medianEndSlider.value);
@@ -95,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnRunMedian.innerHTML = '<span>⚡ Find Median Actors</span>';
       btnRunMedian.disabled = false;
     }
-  });
+  }
+
+  btnRunMedian.addEventListener('click', fetchMedianActors);
 
   function renderMedianResults(medians) {
     if (!medians || medians.length === 0) {
@@ -103,19 +113,72 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const html = medians.map(m => `
-      <div class="comm-card median-card">
-        <div class="median-rank">#${m.rank}</div>
-        <div class="median-name">${m.name}</div>
-        <div class="median-path">Avg Path: ${m.avg_path}</div>
-        <div style="font-size:12px; color:var(--text-muted);">
-          Total Path Sum: ${m.total_path_sum.toLocaleString()}
+    const html = medians.map(m => {
+      // Hop distribution progress bars HTML
+      const hopBarsHtml = (m.hop_distribution || []).map(h => `
+        <div class="genre-row" style="margin-bottom:6px;">
+          <div class="genre-info">
+            <span>${h.hop} Hop${h.hop > 1 ? 's' : ''} Distance</span>
+            <span><strong style="color:var(--accent-cyan);">${h.percentage}%</strong> (${h.count.toLocaleString()} actors)</span>
+          </div>
+          <div class="genre-bar-bg">
+            <div class="genre-bar-fill" style="width: ${Math.min(h.percentage, 100)}%; background: linear-gradient(90deg, #34d399, #38bdf8);"></div>
+          </div>
         </div>
-        <div style="font-size:11px; color:var(--text-dim); margin-top:8px;">
-          ${(m.professions || []).join(' • ').toUpperCase()}
+      `).join('');
+
+      return `
+        <div class="comm-card median-card">
+          <div class="median-rank">#${m.rank}</div>
+          <div class="median-name">${m.name}</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+            ${(m.professions || []).join(' • ') || 'ACTOR'}
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:16px;">
+            <span class="median-path">Avg Path (μ): ${m.avg_path} hops</span>
+            <span class="median-path" style="background:rgba(244, 63, 94, 0.15); color:var(--accent-rose);">Longest Path (Max): ${m.max_path} hops</span>
+            <span class="median-path" style="background:rgba(129, 140, 248, 0.15); color:var(--accent-purple);">Direct Co-Stars: ${m.direct_co_stars.toLocaleString()}</span>
+          </div>
+
+          <!-- Normal Distribution & Centrality Parameters Grid -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:10px; padding:12px; margin-bottom:16px; width:100%; text-align:left;">
+            <div style="font-size:11px; font-weight:700; color:var(--accent-amber); text-transform:uppercase; margin-bottom:8px; text-align:center;">
+              📊 Normal Distribution & Centrality Parameters
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:12px;">
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Mean Distance (μ)</div>
+                <div style="color:#fff; font-weight:700;">${m.avg_path} hops</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Std Dev (σ)</div>
+                <div style="color:#fff; font-weight:700;">±${m.std_dev}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Variance (σ²)</div>
+                <div style="color:#fff; font-weight:700;">${m.variance}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Closeness Centrality</div>
+                <div style="color:var(--accent-cyan); font-weight:700;">${m.closeness}</div>
+              </div>
+            </div>
+            <div style="font-size:11px; color:var(--text-dim); text-align:center; margin-top:8px;">
+              Total Path Sum: ${m.total_path_sum.toLocaleString()}
+            </div>
+          </div>
+
+          <!-- Distance Breakdown Histogram -->
+          <div style="width:100%; text-align:left;">
+            <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">
+              🌐 Hop Distance Breakdown (Histogram)
+            </div>
+            ${hopBarsHtml}
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     medianResultsGrid.innerHTML = html;
   }

@@ -29,3 +29,6 @@ env/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Example project guidelines & reference PDFs
+example/

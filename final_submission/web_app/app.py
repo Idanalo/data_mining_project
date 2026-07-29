@@ -40,14 +40,14 @@ class MedianRequest(BaseModel):
     top_k: int = 5
 
 @app.get("/", response_class=HTMLResponse)
-async def serve_index():
+def serve_index():
     index_file = static_dir / "index.html"
     if index_file.exists():
         return FileResponse(str(index_file))
     return HTMLResponse("<h1>Actor Network Community Explorer Backend Running</h1>")
 
 @app.get("/api/years")
-async def get_available_years():
+def get_available_years():
     """Returns year boundaries for the UI sliders."""
     return {
         "min_year": 1920,
@@ -57,7 +57,7 @@ async def get_available_years():
     }
 
 @app.post("/api/cluster")
-async def run_clustering_endpoint(req: ClusterRequest):
+def run_clustering_endpoint(req: ClusterRequest):
     """Executes graph community clustering with dual-way temporal edge filtering (created_before & active_after)."""
     try:
         created_before_year = req.year if req.year is not None else req.created_before
@@ -74,7 +74,7 @@ async def run_clustering_endpoint(req: ClusterRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/community/{created_before}/{community_id}")
-async def get_community_details_endpoint(
+def get_community_details_endpoint(
     created_before: int,
     community_id: int,
     active_after: int = Query(default=1800),
@@ -97,7 +97,7 @@ async def get_community_details_endpoint(
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/actor/{nconst}")
-async def get_actor_statistics_endpoint(nconst: str):
+def get_actor_statistics_endpoint(nconst: str):
     """Fetches comprehensive actor statistics including genre profile, geographical tag, and co-star network."""
     try:
         res = clusterer.get_actor_statistics(nconst=nconst)
@@ -108,7 +108,7 @@ async def get_actor_statistics_endpoint(nconst: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/median_actors")
-async def get_median_actors_endpoint(req: MedianRequest):
+def get_median_actors_endpoint(req: MedianRequest):
     """Calculates the top median actors for a given year range."""
     try:
         res = clusterer.calculate_median_actors(
