@@ -93,12 +93,18 @@ document.addEventListener('DOMContentLoaded', () => {
       medianLoading.style.display = 'none';
       if (data.error) {
         medianResultsGrid.innerHTML = `<div style="color:var(--accent-rose); padding:20px;">${data.error}</div>`;
+        document.getElementById('popular-results-grid').innerHTML = '';
+        document.getElementById('kevin-bacon-container').innerHTML = '';
       } else {
         renderMedianResults(data.top_medians);
+        renderPopularResults(data.top_popular);
+        renderKevinBaconStats(data.kevin_bacon);
       }
     } catch (err) {
       medianLoading.style.display = 'none';
       medianResultsGrid.innerHTML = `<div style="color:var(--accent-rose); padding:20px;">Error: ${err.message}</div>`;
+      document.getElementById('popular-results-grid').innerHTML = '';
+      document.getElementById('kevin-bacon-container').innerHTML = '';
     } finally {
       btnRunMedian.innerHTML = '<span>⚡ Find Median Actors</span>';
       btnRunMedian.disabled = false;
@@ -106,6 +112,83 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   btnRunMedian.addEventListener('click', fetchMedianActors);
+
+  function renderPopularResults(popular) {
+    const popularGrid = document.getElementById('popular-results-grid');
+    if (!popular || popular.length === 0) {
+      popularGrid.innerHTML = '<div style="color:var(--text-muted); padding:20px;">No popular actors data available for this selection.</div>';
+      return;
+    }
+
+    const html = popular.map((m, idx) => {
+      // Hop distribution progress bars HTML (using same format)
+      const hopBarsHtml = (m.hop_distribution || []).map(h => `
+        <div class="genre-row" style="margin-bottom:6px;">
+          <div class="genre-info">
+            <span>${h.hop} Hop${h.hop > 1 ? 's' : ''} Distance</span>
+            <span><strong style="color:var(--accent-cyan);">${h.percentage}%</strong> (${h.count.toLocaleString()} actors)</span>
+          </div>
+          <div class="genre-bar-bg">
+            <div class="genre-bar-fill" style="width: ${Math.min(h.percentage, 100)}%; background: linear-gradient(90deg, #34d399, #38bdf8);"></div>
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <div class="comm-card median-card" style="border-top: 4px solid var(--accent-emerald);">
+          <div class="median-rank" style="color: var(--accent-emerald);">#${idx + 1}</div>
+          <div class="median-name">${m.name}</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+            ${(m.professions || []).join(' • ') || 'ACTOR'}
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:16px;">
+            <span class="median-path" style="background:rgba(52, 211, 153, 0.15); color:var(--accent-emerald);">Popularity Score: ${m.popularity_score}</span>
+            <span class="median-path" style="background:rgba(251, 191, 36, 0.15); color:var(--accent-amber);">Movies in Window: ${m.movies_in_window}</span>
+            <span class="median-path" style="background:rgba(129, 140, 248, 0.15); color:var(--accent-purple);">Direct Co-Stars: ${(m.direct_co_stars || 0).toLocaleString()}</span>
+          </div>
+
+          <!-- Normal Distribution & Centrality Parameters Grid -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:10px; padding:12px; margin-bottom:16px; width:100%; text-align:left;">
+            <div style="font-size:11px; font-weight:700; color:var(--accent-emerald); text-transform:uppercase; margin-bottom:8px; text-align:center;">
+              📊 Network Scale & Distribution
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:12px;">
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Mean Distance (μ)</div>
+                <div style="color:#fff; font-weight:700;">${m.avg_path || 'N/A'} hops</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Std Dev (σ)</div>
+                <div style="color:#fff; font-weight:700;">±${m.std_dev || 'N/A'}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Variance (σ²)</div>
+                <div style="color:#fff; font-weight:700;">${m.variance || 'N/A'}</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+                <div style="color:var(--text-muted); font-size:10px;">Closeness Centrality</div>
+                <div style="color:var(--accent-cyan); font-weight:700;">${m.closeness || 'N/A'}</div>
+              </div>
+            </div>
+            <div style="font-size:11px; color:var(--text-dim); text-align:center; margin-top:8px;">
+              Total Path Sum: ${(m.total_path_sum || 0).toLocaleString()}
+            </div>
+          </div>
+
+          <!-- Distance Breakdown Histogram -->
+          <div style="width:100%; text-align:left;">
+            <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">
+              🌐 Hop Distance Breakdown (Histogram)
+            </div>
+            ${hopBarsHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    popularGrid.innerHTML = html;
+  }
 
   function renderMedianResults(medians) {
     if (!medians || medians.length === 0) {
@@ -183,6 +266,77 @@ document.addEventListener('DOMContentLoaded', () => {
     medianResultsGrid.innerHTML = html;
   }
 
+  function renderKevinBaconStats(kb) {
+    const kbGrid = document.getElementById('kevin-bacon-container');
+    if (!kb) {
+      kbGrid.innerHTML = '<div style="color:var(--text-muted); padding:20px;">Kevin Bacon is not connected in this sub-graph window.</div>';
+      return;
+    }
+
+    const hopBarsHtml = (kb.hop_distribution || []).map(h => `
+      <div class="genre-row" style="margin-bottom:6px;">
+        <div class="genre-info">
+          <span>${h.hop} Hop${h.hop > 1 ? 's' : ''} Distance</span>
+          <span><strong style="color:var(--accent-orange);">${h.percentage}%</strong> (${h.count.toLocaleString()} actors)</span>
+        </div>
+        <div class="genre-bar-bg">
+          <div class="genre-bar-fill" style="width: ${Math.min(h.percentage, 100)}%; background: linear-gradient(90deg, #fb923c, #f97316);"></div>
+        </div>
+      </div>
+    `).join('');
+
+    kbGrid.innerHTML = `
+      <div class="comm-card median-card" style="border-top: 4px solid var(--accent-orange); background: rgba(251, 146, 60, 0.05);">
+        <div class="median-rank" style="color: var(--accent-orange);">★</div>
+        <div class="median-name">${kb.name}</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+          ${(kb.professions || []).join(' • ') || 'ACTOR'}
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:12px; color:var(--text-muted);">Direct Co-Stars (1-Hop):</span>
+            <strong style="color:#fff;">${(kb.direct_co_stars || 0).toLocaleString()}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:12px; color:var(--text-muted);">Average Degrees (μ):</span>
+            <strong style="color:var(--accent-orange); font-size:14px;">${kb.avg_path || 'N/A'}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:12px; color:var(--text-muted);">Network Reach (Max Hop):</span>
+            <strong style="color:#fff;">${kb.max_path || 'N/A'}</strong>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px; text-align:center;">
+          <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+            <div style="color:var(--text-muted); font-size:10px;">Std Dev (σ)</div>
+            <div style="color:#fff; font-weight:700;">±${kb.std_dev || 'N/A'}</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+            <div style="color:var(--text-muted); font-size:10px;">Variance (σ²)</div>
+            <div style="color:#fff; font-weight:700;">${kb.variance || 'N/A'}</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); padding:8px; border-radius:6px;">
+            <div style="color:var(--text-muted); font-size:10px;">Closeness Centrality</div>
+            <div style="color:var(--accent-orange); font-weight:700;">${kb.closeness || 'N/A'}</div>
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--text-dim); text-align:center; margin-top:8px;">
+          Total Path Sum: ${(kb.total_path_sum || 0).toLocaleString()}
+        </div>
+
+        <!-- Distance Breakdown Histogram -->
+        <div style="width:100%; text-align:left; margin-top:16px;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">
+            🌐 Hop Distance Breakdown (Histogram)
+          </div>
+          ${hopBarsHtml}
+        </div>
+      </div>
+    `;
+  }
   // Sync Slider Value Displays
   yearSlider.addEventListener('input', (e) => {
     yearValue.textContent = e.target.value;
@@ -661,6 +815,70 @@ document.addEventListener('DOMContentLoaded', () => {
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) {
       modalOverlay.classList.remove('active');
+    }
+  });
+
+  // Timeline View Logic
+  const timelineYearSlider = document.getElementById('timeline-year-slider');
+  const timelineYearValue = document.getElementById('timeline-year-value');
+  const timelineDisplayYear = document.getElementById('timeline-display-year');
+  const timelineResultsGrid = document.getElementById('timeline-results-grid');
+  
+  let timelineData = null;
+
+  async function loadTimelineData() {
+    try {
+      const res = await fetch('/static/popular_actors_timeline.json');
+      if (res.ok) {
+        timelineData = await res.json();
+        renderTimelineYear(parseInt(timelineYearSlider.value));
+      } else {
+        timelineResultsGrid.innerHTML = '<div style="color:var(--accent-rose); padding:20px;">Timeline data not available. Please run popularity_calculator.py first.</div>';
+      }
+    } catch (e) {
+      console.error("Failed to load timeline data", e);
+    }
+  }
+  
+  function renderTimelineYear(year) {
+    if (!timelineData) return;
+    
+    timelineDisplayYear.textContent = year;
+    const yearData = timelineData.find(d => d.year === year);
+    
+    if (!yearData || !yearData.top_actors || yearData.top_actors.length === 0) {
+      timelineResultsGrid.innerHTML = '<div style="color:var(--text-muted); padding:20px;">No data available for this year.</div>';
+      return;
+    }
+    
+    const html = yearData.top_actors.map((actor, idx) => `
+      <div class="comm-card median-card" style="border-top: 4px solid var(--accent-purple);">
+        <div class="median-rank" style="color: var(--accent-purple);">#${idx + 1}</div>
+        <div class="median-name">${actor.name}</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+          ${(actor.professions || []).join(' • ') || 'ACTOR'}
+        </div>
+        
+        <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:16px;">
+          <span class="median-path" style="background:rgba(168, 85, 247, 0.15); color:var(--accent-purple);">Popularity Score: ${actor.score}</span>
+          <span class="median-path" style="background:rgba(251, 191, 36, 0.15); color:var(--accent-amber);">Movies in Window (${yearData.window}): ${actor.movies_in_window}</span>
+        </div>
+      </div>
+    `).join('');
+    
+    timelineResultsGrid.innerHTML = html;
+  }
+  
+  timelineYearSlider.addEventListener('input', (e) => {
+    const yr = parseInt(e.target.value);
+    timelineYearValue.textContent = yr;
+    renderTimelineYear(yr);
+  });
+  
+  // Load timeline data when user switches to the timeline tab
+  document.querySelector('.tab-btn[data-target="timeline-view"]').addEventListener('click', () => {
+    if (!timelineData) {
+      loadTimelineData();
     }
   });
 });

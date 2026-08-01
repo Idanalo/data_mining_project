@@ -1,0 +1,4170 @@
+[
+  {
+    "year": 1920,
+    "window": "1919-1921",
+    "top_actors": [
+      {
+        "nconst": "nm0001273",
+        "name": "Lillian Gish",
+        "professions": [
+          "actress",
+          "writer",
+          "director"
+        ],
+        "score": 402.57,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0001196",
+        "name": "Douglas Fairbanks",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 328.49,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0324553",
+        "name": "Bernhard Goetzke",
+        "professions": [
+          "actor",
+          "archive_footage"
+        ],
+        "score": 325.25,
+        "movies_in_window": 51
+      }
+    ]
+  },
+  {
+    "year": 1921,
+    "window": "1920-1922",
+    "top_actors": [
+      {
+        "nconst": "nm0470328",
+        "name": "Werner Krauss",
+        "professions": [
+          "actor",
+          "archive_footage"
+        ],
+        "score": 372.94,
+        "movies_in_window": 32
+      },
+      {
+        "nconst": "nm0884388",
+        "name": "Rudolph Valentino",
+        "professions": [
+          "actor",
+          "producer",
+          "archive_footage"
+        ],
+        "score": 359.79,
+        "movies_in_window": 15
+      },
+      {
+        "nconst": "nm0001196",
+        "name": "Douglas Fairbanks",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 355.73,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1922,
+    "window": "1921-1923",
+    "top_actors": [
+      {
+        "nconst": "nm0000122",
+        "name": "Charles Chaplin",
+        "professions": [
+          "writer",
+          "actor",
+          "director"
+        ],
+        "score": 407.99,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0516001",
+        "name": "Harold Lloyd",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 384.01,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0884388",
+        "name": "Rudolph Valentino",
+        "professions": [
+          "actor",
+          "producer",
+          "archive_footage"
+        ],
+        "score": 359.79,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1923,
+    "window": "1922-1924",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 474.75,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0516001",
+        "name": "Harold Lloyd",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 392.81,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0417837",
+        "name": "Emil Jannings",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 373.14,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1924,
+    "window": "1923-1925",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 474.75,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0151606",
+        "name": "Lon Chaney",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 416.44,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0516001",
+        "name": "Harold Lloyd",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 408.91,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1925,
+    "window": "1924-1926",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 504.9,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0151606",
+        "name": "Lon Chaney",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 401.35,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0417837",
+        "name": "Emil Jannings",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 383.12,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1926,
+    "window": "1925-1927",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 446.89,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0375609",
+        "name": "Brigitte Helm",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 413.22,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0151606",
+        "name": "Lon Chaney",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 412.52,
+        "movies_in_window": 14
+      }
+    ]
+  },
+  {
+    "year": 1927,
+    "window": "1926-1928",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 448.34,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0375609",
+        "name": "Brigitte Helm",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 445.22,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0516001",
+        "name": "Harold Lloyd",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 371.81,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1928,
+    "window": "1927-1929",
+    "top_actors": [
+      {
+        "nconst": "nm0375609",
+        "name": "Brigitte Helm",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 445.22,
+        "movies_in_window": 14
+      },
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 401.97,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0151606",
+        "name": "Lon Chaney",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 370.36,
+        "movies_in_window": 11
+      }
+    ]
+  },
+  {
+    "year": 1929,
+    "window": "1928-1930",
+    "top_actors": [
+      {
+        "nconst": "nm0000036",
+        "name": "Buster Keaton",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 390.97,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000315",
+        "name": "Louise Brooks",
+        "professions": [
+          "actress",
+          "archive_footage"
+        ],
+        "score": 389.86,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0001256",
+        "name": "Greta Garbo",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 356.19,
+        "movies_in_window": 10
+      }
+    ]
+  },
+  {
+    "year": 1930,
+    "window": "1929-1931",
+    "top_actors": [
+      {
+        "nconst": "nm0000050",
+        "name": "Groucho Marx",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 425.46,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000315",
+        "name": "Louise Brooks",
+        "professions": [
+          "actress",
+          "archive_footage"
+        ],
+        "score": 389.86,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000064",
+        "name": "Edward G. Robinson",
+        "professions": [
+          "actor",
+          "writer",
+          "soundtrack"
+        ],
+        "score": 388.47,
+        "movies_in_window": 11
+      }
+    ]
+  },
+  {
+    "year": 1931,
+    "window": "1930-1932",
+    "top_actors": [
+      {
+        "nconst": "nm0000509",
+        "name": "Bela Lugosi",
+        "professions": [
+          "actor",
+          "costume_department",
+          "miscellaneous"
+        ],
+        "score": 439.32,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0000050",
+        "name": "Groucho Marx",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 432.48,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 425.93,
+        "movies_in_window": 20
+      }
+    ]
+  },
+  {
+    "year": 1932,
+    "window": "1931-1933",
+    "top_actors": [
+      {
+        "nconst": "nm0000050",
+        "name": "Groucho Marx",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 453.15,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000509",
+        "name": "Bela Lugosi",
+        "professions": [
+          "actor",
+          "costume_department",
+          "miscellaneous"
+        ],
+        "score": 439.32,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 425.93,
+        "movies_in_window": 19
+      }
+    ]
+  },
+  {
+    "year": 1933,
+    "window": "1932-1934",
+    "top_actors": [
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 444.88,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 422.88,
+        "movies_in_window": 13
+      },
+      {
+        "nconst": "nm0000017",
+        "name": "Marlene Dietrich",
+        "professions": [
+          "actress",
+          "music_department",
+          "soundtrack"
+        ],
+        "score": 416.96,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1934,
+    "window": "1933-1935",
+    "top_actors": [
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 462.21,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 426.32,
+        "movies_in_window": 13
+      },
+      {
+        "nconst": "nm0232196",
+        "name": "Robert Donat",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 411.91,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1935,
+    "window": "1934-1936",
+    "top_actors": [
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 462.21,
+        "movies_in_window": 12
+      },
+      {
+        "nconst": "nm0001635",
+        "name": "William Powell",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 454.26,
+        "movies_in_window": 14
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 437.0,
+        "movies_in_window": 13
+      }
+    ]
+  },
+  {
+    "year": 1936,
+    "window": "1935-1937",
+    "top_actors": [
+      {
+        "nconst": "nm0000472",
+        "name": "Boris Karloff",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 441.75,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0001635",
+        "name": "William Powell",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 435.03,
+        "movies_in_window": 12
+      },
+      {
+        "nconst": "nm0796662",
+        "name": "Sylvia Sidney",
+        "professions": [
+          "actress",
+          "archive_footage"
+        ],
+        "score": 431.6,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1937,
+    "window": "1936-1938",
+    "top_actors": [
+      {
+        "nconst": "nm0000031",
+        "name": "Katharine Hepburn",
+        "professions": [
+          "actress",
+          "writer",
+          "soundtrack"
+        ],
+        "score": 454.71,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0300064",
+        "name": "Jean Gabin",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 436.27,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0001635",
+        "name": "William Powell",
+        "professions": [
+          "actor",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 435.03,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1938,
+    "window": "1937-1939",
+    "top_actors": [
+      {
+        "nconst": "nm0000031",
+        "name": "Katharine Hepburn",
+        "professions": [
+          "actress",
+          "writer",
+          "soundtrack"
+        ],
+        "score": 454.71,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0300064",
+        "name": "Jean Gabin",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 436.27,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 427.64,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1939,
+    "window": "1938-1940",
+    "top_actors": [
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 483.46,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 439.11,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000020",
+        "name": "Henry Fonda",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 437.54,
+        "movies_in_window": 14
+      }
+    ]
+  },
+  {
+    "year": 1940,
+    "window": "1939-1941",
+    "top_actors": [
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 497.76,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000011",
+        "name": "Gary Cooper",
+        "professions": [
+          "actor",
+          "stunts",
+          "producer"
+        ],
+        "score": 440.25,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000022",
+        "name": "Clark Gable",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 439.11,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1941,
+    "window": "1940-1942",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 512.81,
+        "movies_in_window": 11
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 497.76,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000011",
+        "name": "Gary Cooper",
+        "professions": [
+          "actor",
+          "stunts",
+          "producer"
+        ],
+        "score": 440.25,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1942,
+    "window": "1941-1943",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 522.61,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0000080",
+        "name": "Orson Welles",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 482.84,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000011",
+        "name": "Gary Cooper",
+        "professions": [
+          "actor",
+          "stunts",
+          "producer"
+        ],
+        "score": 440.25,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1943,
+    "window": "1942-1944",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 500.96,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 438.96,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0001078",
+        "name": "Bing Crosby",
+        "professions": [
+          "music_artist",
+          "actor",
+          "producer"
+        ],
+        "score": 428.99,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1944,
+    "window": "1943-1945",
+    "top_actors": [
+      {
+        "nconst": "nm0000074",
+        "name": "Gene Tierney",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 453.54,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0001537",
+        "name": "Ray Milland",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 451.68,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 429.65,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1945,
+    "window": "1944-1946",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 470.24,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 466.74,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0001537",
+        "name": "Ray Milland",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 451.68,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1946,
+    "window": "1945-1947",
+    "top_actors": [
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 465.24,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 462.16,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000028",
+        "name": "Rita Hayworth",
+        "professions": [
+          "actress",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 429.0,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1947,
+    "window": "1946-1948",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 519.89,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 512.18,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 469.45,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1948,
+    "window": "1947-1949",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 491.69,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000078",
+        "name": "John Wayne",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 457.88,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 444.28,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1949,
+    "window": "1948-1950",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 499.07,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 497.24,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0000078",
+        "name": "John Wayne",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 457.88,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1950,
+    "window": "1949-1951",
+    "top_actors": [
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 461.23,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 456.31,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0001536",
+        "name": "Toshir\u00f4 Mifune",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 446.25,
+        "movies_in_window": 16
+      }
+    ]
+  },
+  {
+    "year": 1951,
+    "window": "1950-1952",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 463.45,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 461.23,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000037",
+        "name": "Gene Kelly",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "director"
+        ],
+        "score": 459.64,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1952,
+    "window": "1951-1953",
+    "top_actors": [
+      {
+        "nconst": "nm0000060",
+        "name": "Gregory Peck",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 447.86,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000037",
+        "name": "Gene Kelly",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "director"
+        ],
+        "score": 444.1,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 442.61,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1953,
+    "window": "1952-1954",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 485.79,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000008",
+        "name": "Marlon Brando",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 472.91,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 468.42,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1954,
+    "window": "1953-1955",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 481.06,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000008",
+        "name": "Marlon Brando",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 479.52,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 468.42,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1955,
+    "window": "1954-1956",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 510.76,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000007",
+        "name": "Humphrey Bogart",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 468.42,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0001536",
+        "name": "Toshir\u00f4 Mifune",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 467.17,
+        "movies_in_window": 15
+      }
+    ]
+  },
+  {
+    "year": 1956,
+    "window": "1955-1957",
+    "top_actors": [
+      {
+        "nconst": "nm0000020",
+        "name": "Henry Fonda",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 513.27,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000018",
+        "name": "Kirk Douglas",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 461.58,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000034",
+        "name": "William Holden",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "soundtrack"
+        ],
+        "score": 456.62,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1957,
+    "window": "1956-1958",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 516.34,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000020",
+        "name": "Henry Fonda",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 499.03,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000018",
+        "name": "Kirk Douglas",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 482.3,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1958,
+    "window": "1957-1959",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 516.67,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 493.9,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000018",
+        "name": "Kirk Douglas",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 477.92,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1959,
+    "window": "1958-1960",
+    "top_actors": [
+      {
+        "nconst": "nm0000071",
+        "name": "James Stewart",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 516.67,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 489.58,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000018",
+        "name": "Kirk Douglas",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 464.19,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1960,
+    "window": "1959-1961",
+    "top_actors": [
+      {
+        "nconst": "nm0000030",
+        "name": "Audrey Hepburn",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 475.49,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000026",
+        "name": "Cary Grant",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 471.46,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000078",
+        "name": "John Wayne",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 459.59,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1961,
+    "window": "1960-1962",
+    "top_actors": [
+      {
+        "nconst": "nm0001536",
+        "name": "Toshir\u00f4 Mifune",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 496.32,
+        "movies_in_window": 14
+      },
+      {
+        "nconst": "nm0001792",
+        "name": "Rod Taylor",
+        "professions": [
+          "actor",
+          "music_department",
+          "writer"
+        ],
+        "score": 493.46,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000578",
+        "name": "Anthony Perkins",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 466.17,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1962,
+    "window": "1961-1963",
+    "top_actors": [
+      {
+        "nconst": "nm0001792",
+        "name": "Rod Taylor",
+        "professions": [
+          "actor",
+          "music_department",
+          "writer"
+        ],
+        "score": 528.6,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0001536",
+        "name": "Toshir\u00f4 Mifune",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 519.4,
+        "movies_in_window": 13
+      },
+      {
+        "nconst": "nm0000060",
+        "name": "Gregory Peck",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 471.05,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1963,
+    "window": "1962-1964",
+    "top_actors": [
+      {
+        "nconst": "nm0000125",
+        "name": "Sean Connery",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 547.94,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000634",
+        "name": "Peter Sellers",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 494.96,
+        "movies_in_window": 12
+      },
+      {
+        "nconst": "nm0000060",
+        "name": "Gregory Peck",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 471.05,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1964,
+    "window": "1963-1965",
+    "top_actors": [
+      {
+        "nconst": "nm0000125",
+        "name": "Sean Connery",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 542.67,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000634",
+        "name": "Peter Sellers",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 510.57,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0001637",
+        "name": "Vincent Price",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "writer"
+        ],
+        "score": 462.39,
+        "movies_in_window": 15
+      }
+    ]
+  },
+  {
+    "year": 1965,
+    "window": "1964-1966",
+    "top_actors": [
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 596.8,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000634",
+        "name": "Peter Sellers",
+        "professions": [
+          "actor",
+          "writer",
+          "director"
+        ],
+        "score": 510.57,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000125",
+        "name": "Sean Connery",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 508.61,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1966,
+    "window": "1965-1967",
+    "top_actors": [
+      {
+        "nconst": "nm0000125",
+        "name": "Sean Connery",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 500.57,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000056",
+        "name": "Paul Newman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 484.3,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000366",
+        "name": "Catherine Deneuve",
+        "professions": [
+          "actress",
+          "producer",
+          "talent_agent"
+        ],
+        "score": 478.61,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1967,
+    "window": "1966-1968",
+    "top_actors": [
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 525.09,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000056",
+        "name": "Paul Newman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 484.3,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000030",
+        "name": "Audrey Hepburn",
+        "professions": [
+          "actress",
+          "soundtrack",
+          "archive_footage"
+        ],
+        "score": 475.08,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1968,
+    "window": "1967-1969",
+    "top_actors": [
+      {
+        "nconst": "nm0000056",
+        "name": "Paul Newman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 514.59,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000163",
+        "name": "Dustin Hoffman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 485.29,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0001511",
+        "name": "Lee Marvin",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "soundtrack"
+        ],
+        "score": 474.87,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1969,
+    "window": "1968-1970",
+    "top_actors": [
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 483.57,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000163",
+        "name": "Dustin Hoffman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 455.09,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000078",
+        "name": "John Wayne",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 452.91,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1970,
+    "window": "1969-1971",
+    "top_actors": [
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 504.38,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000163",
+        "name": "Dustin Hoffman",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 503.88,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000323",
+        "name": "Michael Caine",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 476.03,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1971,
+    "window": "1970-1972",
+    "top_actors": [
+      {
+        "nconst": "nm0000008",
+        "name": "Marlon Brando",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 512.42,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 504.38,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000095",
+        "name": "Woody Allen",
+        "professions": [
+          "writer",
+          "director",
+          "actor"
+        ],
+        "score": 485.91,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1972,
+    "window": "1971-1973",
+    "top_actors": [
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 518.44,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000008",
+        "name": "Marlon Brando",
+        "professions": [
+          "actor",
+          "director",
+          "writer"
+        ],
+        "score": 512.42,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000045",
+        "name": "Bruce Lee",
+        "professions": [
+          "actor",
+          "writer",
+          "miscellaneous"
+        ],
+        "score": 494.81,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1973,
+    "window": "1972-1974",
+    "top_actors": [
+      {
+        "nconst": "nm0000199",
+        "name": "Al Pacino",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 502.27,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000045",
+        "name": "Bruce Lee",
+        "professions": [
+          "actor",
+          "writer",
+          "miscellaneous"
+        ],
+        "score": 494.81,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 492.94,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1974,
+    "window": "1973-1975",
+    "top_actors": [
+      {
+        "nconst": "nm0000199",
+        "name": "Al Pacino",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 581.55,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000197",
+        "name": "Jack Nicholson",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 558.3,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0001037",
+        "name": "Graham Chapman",
+        "professions": [
+          "writer",
+          "actor",
+          "miscellaneous"
+        ],
+        "score": 498.28,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1975,
+    "window": "1974-1976",
+    "top_actors": [
+      {
+        "nconst": "nm0000197",
+        "name": "Jack Nicholson",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 557.16,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 500.78,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0001037",
+        "name": "Graham Chapman",
+        "professions": [
+          "writer",
+          "actor",
+          "miscellaneous"
+        ],
+        "score": 498.28,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1976,
+    "window": "1975-1977",
+    "top_actors": [
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 500.78,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0001037",
+        "name": "Graham Chapman",
+        "professions": [
+          "writer",
+          "actor",
+          "miscellaneous"
+        ],
+        "score": 498.28,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000095",
+        "name": "Woody Allen",
+        "professions": [
+          "writer",
+          "director",
+          "actor"
+        ],
+        "score": 488.69,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1977,
+    "window": "1976-1978",
+    "top_actors": [
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 555.22,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000237",
+        "name": "John Travolta",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 493.91,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 490.08,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1978,
+    "window": "1977-1979",
+    "top_actors": [
+      {
+        "nconst": "nm0001702",
+        "name": "Roy Scheider",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 505.32,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 489.72,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000549",
+        "name": "Roger Moore",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "producer"
+        ],
+        "score": 484.11,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1979,
+    "window": "1978-1980",
+    "top_actors": [
+      {
+        "nconst": "nm0000004",
+        "name": "John Belushi",
+        "professions": [
+          "actor",
+          "writer",
+          "music_department"
+        ],
+        "score": 522.28,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000142",
+        "name": "Clint Eastwood",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 486.82,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0001037",
+        "name": "Graham Chapman",
+        "professions": [
+          "writer",
+          "actor",
+          "miscellaneous"
+        ],
+        "score": 474.11,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1980,
+    "window": "1979-1981",
+    "top_actors": [
+      {
+        "nconst": "nm0000154",
+        "name": "Mel Gibson",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 531.86,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0001345",
+        "name": "Jim Henson",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 487.74,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000549",
+        "name": "Roger Moore",
+        "professions": [
+          "actor",
+          "miscellaneous",
+          "producer"
+        ],
+        "score": 483.01,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 1981,
+    "window": "1980-1982",
+    "top_actors": [
+      {
+        "nconst": "nm0000313",
+        "name": "Jeff Bridges",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 533.1,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000621",
+        "name": "Kurt Russell",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 532.57,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000148",
+        "name": "Harrison Ford",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 529.46,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1982,
+    "window": "1981-1983",
+    "top_actors": [
+      {
+        "nconst": "nm0000092",
+        "name": "John Cleese",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 554.79,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000313",
+        "name": "Jeff Bridges",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 533.1,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000148",
+        "name": "Harrison Ford",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 527.82,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1983,
+    "window": "1982-1984",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 573.47,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000313",
+        "name": "Jeff Bridges",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 561.28,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000092",
+        "name": "John Cleese",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 554.79,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1984,
+    "window": "1983-1985",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 568.05,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000331",
+        "name": "Chevy Chase",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 511.27,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000230",
+        "name": "Sylvester Stallone",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 505.92,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1985,
+    "window": "1984-1986",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 568.05,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000230",
+        "name": "Sylvester Stallone",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 540.53,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000148",
+        "name": "Harrison Ford",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 530.91,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 1986,
+    "window": "1985-1987",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 569.77,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000150",
+        "name": "Michael J. Fox",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 544.77,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000230",
+        "name": "Sylvester Stallone",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 540.53,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1987,
+    "window": "1986-1988",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 566.35,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000552",
+        "name": "Eddie Murphy",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 550.0,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000221",
+        "name": "Charlie Sheen",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 533.42,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1988,
+    "window": "1987-1989",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 566.35,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000150",
+        "name": "Michael J. Fox",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 548.62,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000552",
+        "name": "Eddie Murphy",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 537.32,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 1989,
+    "window": "1988-1990",
+    "top_actors": [
+      {
+        "nconst": "nm0000150",
+        "name": "Michael J. Fox",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 601.62,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 567.92,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 560.82,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1990,
+    "window": "1989-1991",
+    "top_actors": [
+      {
+        "nconst": "nm0000150",
+        "name": "Michael J. Fox",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 601.62,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 593.14,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 580.87,
+        "movies_in_window": 8
+      }
+    ]
+  },
+  {
+    "year": 1991,
+    "window": "1990-1992",
+    "top_actors": [
+      {
+        "nconst": "nm0000216",
+        "name": "Arnold Schwarzenegger",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 593.14,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000134",
+        "name": "Robert De Niro",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 580.87,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000199",
+        "name": "Al Pacino",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 565.16,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1992,
+    "window": "1991-1993",
+    "top_actors": [
+      {
+        "nconst": "nm0000199",
+        "name": "Al Pacino",
+        "professions": [
+          "actor",
+          "director",
+          "producer"
+        ],
+        "score": 556.02,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 549.32,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000126",
+        "name": "Kevin Costner",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 547.03,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1993,
+    "window": "1992-1994",
+    "top_actors": [
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 593.67,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 590.97,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000209",
+        "name": "Tim Robbins",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 564.78,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1994,
+    "window": "1993-1995",
+    "top_actors": [
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 623.01,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 590.97,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000154",
+        "name": "Mel Gibson",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 577.44,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1995,
+    "window": "1994-1996",
+    "top_actors": [
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 623.01,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 590.97,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000154",
+        "name": "Mel Gibson",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 577.44,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1996,
+    "window": "1995-1997",
+    "top_actors": [
+      {
+        "nconst": "nm0000246",
+        "name": "Bruce Willis",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 595.33,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000245",
+        "name": "Robin Williams",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 587.61,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 577.46,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 1997,
+    "window": "1996-1998",
+    "top_actors": [
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 608.99,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 589.51,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 578.88,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 1998,
+    "window": "1997-1999",
+    "top_actors": [
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 639.06,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 611.24,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000246",
+        "name": "Bruce Willis",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 604.86,
+        "movies_in_window": 9
+      }
+    ]
+  },
+  {
+    "year": 1999,
+    "window": "1998-2000",
+    "top_actors": [
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 639.36,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 619.45,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0853301",
+        "name": "Veronica Taylor",
+        "professions": [
+          "actress",
+          "miscellaneous",
+          "archive_sound"
+        ],
+        "score": 611.05,
+        "movies_in_window": 16
+      }
+    ]
+  },
+  {
+    "year": 2000,
+    "window": "1999-2001",
+    "top_actors": [
+      {
+        "nconst": "nm0000409",
+        "name": "Brendan Fraser",
+        "professions": [
+          "actor",
+          "producer",
+          "art_department"
+        ],
+        "score": 619.1,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 618.2,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000128",
+        "name": "Russell Crowe",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 608.19,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2001,
+    "window": "2000-2002",
+    "top_actors": [
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 596.27,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000129",
+        "name": "Tom Cruise",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 584.9,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000704",
+        "name": "Elijah Wood",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 584.4,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2002,
+    "window": "2001-2003",
+    "top_actors": [
+      {
+        "nconst": "nm0000704",
+        "name": "Elijah Wood",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 671.9,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000196",
+        "name": "Mike Myers",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 602.42,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000129",
+        "name": "Tom Cruise",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 587.86,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 2003,
+    "window": "2002-2004",
+    "top_actors": [
+      {
+        "nconst": "nm0001497",
+        "name": "Tobey Maguire",
+        "professions": [
+          "actor",
+          "producer",
+          "executive"
+        ],
+        "score": 609.48,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 605.29,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 602.58,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 2004,
+    "window": "2003-2005",
+    "top_actors": [
+      {
+        "nconst": "nm0000136",
+        "name": "Johnny Depp",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 626.81,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm0000206",
+        "name": "Keanu Reeves",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 602.22,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 592.14,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 2005,
+    "window": "2004-2006",
+    "top_actors": [
+      {
+        "nconst": "nm0000288",
+        "name": "Christian Bale",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 655.32,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000136",
+        "name": "Johnny Depp",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 619.68,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 612.52,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 2006,
+    "window": "2005-2007",
+    "top_actors": [
+      {
+        "nconst": "nm0000288",
+        "name": "Christian Bale",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 637.7,
+        "movies_in_window": 10
+      },
+      {
+        "nconst": "nm0000136",
+        "name": "Johnny Depp",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 623.65,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000226",
+        "name": "Will Smith",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 598.08,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 2007,
+    "window": "2006-2008",
+    "top_actors": [
+      {
+        "nconst": "nm0000288",
+        "name": "Christian Bale",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 639.1,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0000136",
+        "name": "Johnny Depp",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 609.17,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000226",
+        "name": "Will Smith",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 604.61,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 2008,
+    "window": "2007-2009",
+    "top_actors": [
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 645.62,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0000093",
+        "name": "Brad Pitt",
+        "professions": [
+          "producer",
+          "actor",
+          "executive"
+        ],
+        "score": 612.66,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000288",
+        "name": "Christian Bale",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 609.81,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 2009,
+    "window": "2008-2010",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 627.39,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 625.35,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000120",
+        "name": "Jim Carrey",
+        "professions": [
+          "actor",
+          "writer",
+          "producer"
+        ],
+        "score": 613.6,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 2010,
+    "window": "2009-2011",
+    "top_actors": [
+      {
+        "nconst": "nm0705356",
+        "name": "Daniel Radcliffe",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 618.95,
+        "movies_in_window": 3
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 616.41,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 613.92,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2011,
+    "window": "2010-2012",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 659.34,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 653.32,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 616.41,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2012,
+    "window": "2011-2013",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 652.27,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 643.79,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0290556",
+        "name": "James Franco",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 618.72,
+        "movies_in_window": 19
+      }
+    ]
+  },
+  {
+    "year": 2013,
+    "window": "2012-2014",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 639.83,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000158",
+        "name": "Tom Hanks",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 629.03,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm2225369",
+        "name": "Jennifer Lawrence",
+        "professions": [
+          "actress",
+          "producer",
+          "writer"
+        ],
+        "score": 611.26,
+        "movies_in_window": 10
+      }
+    ]
+  },
+  {
+    "year": 2014,
+    "window": "2013-2015",
+    "top_actors": [
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 645.06,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 642.38,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0000138",
+        "name": "Leonardo DiCaprio",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 631.68,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 2015,
+    "window": "2014-2016",
+    "top_actors": [
+      {
+        "nconst": "nm0262635",
+        "name": "Chris Evans",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 665.2,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 645.06,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0000255",
+        "name": "Ben Affleck",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 628.51,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2016,
+    "window": "2015-2017",
+    "top_actors": [
+      {
+        "nconst": "nm0000255",
+        "name": "Ben Affleck",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 651.67,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0005351",
+        "name": "Ryan Reynolds",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 587.26,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm2225369",
+        "name": "Jennifer Lawrence",
+        "professions": [
+          "actress",
+          "producer",
+          "writer"
+        ],
+        "score": 579.56,
+        "movies_in_window": 7
+      }
+    ]
+  },
+  {
+    "year": 2017,
+    "window": "2016-2018",
+    "top_actors": [
+      {
+        "nconst": "nm0000255",
+        "name": "Ben Affleck",
+        "professions": [
+          "producer",
+          "actor",
+          "writer"
+        ],
+        "score": 651.67,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0005351",
+        "name": "Ryan Reynolds",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 630.52,
+        "movies_in_window": 12
+      },
+      {
+        "nconst": "nm2225369",
+        "name": "Jennifer Lawrence",
+        "professions": [
+          "actress",
+          "producer",
+          "writer"
+        ],
+        "score": 569.83,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 2018,
+    "window": "2017-2019",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 649.07,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 602.98,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0005351",
+        "name": "Ryan Reynolds",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 596.08,
+        "movies_in_window": 10
+      }
+    ]
+  },
+  {
+    "year": 2019,
+    "window": "2018-2020",
+    "top_actors": [
+      {
+        "nconst": "nm0000375",
+        "name": "Robert Downey Jr.",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 687.68,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0005351",
+        "name": "Ryan Reynolds",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 585.01,
+        "movies_in_window": 9
+      },
+      {
+        "nconst": "nm2516299",
+        "name": "Sarah Natochenny",
+        "professions": [
+          "actress",
+          "editorial_department",
+          "miscellaneous"
+        ],
+        "score": 567.28,
+        "movies_in_window": 15
+      }
+    ]
+  },
+  {
+    "year": 2020,
+    "window": "2019-2021",
+    "top_actors": [
+      {
+        "nconst": "nm4043618",
+        "name": "Tom Holland",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 632.72,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0564215",
+        "name": "James McAvoy",
+        "professions": [
+          "actor",
+          "producer",
+          "director"
+        ],
+        "score": 578.48,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0005351",
+        "name": "Ryan Reynolds",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 571.68,
+        "movies_in_window": 6
+      }
+    ]
+  },
+  {
+    "year": 2021,
+    "window": "2020-2022",
+    "top_actors": [
+      {
+        "nconst": "nm4043618",
+        "name": "Tom Holland",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 607.25,
+        "movies_in_window": 7
+      },
+      {
+        "nconst": "nm0425005",
+        "name": "Dwayne Johnson",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 606.29,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm1165110",
+        "name": "Chris Hemsworth",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 580.22,
+        "movies_in_window": 3
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "window": "2021-2023",
+    "top_actors": [
+      {
+        "nconst": "nm0425005",
+        "name": "Dwayne Johnson",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 606.29,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 599.99,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm4043618",
+        "name": "Tom Holland",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 591.19,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2023,
+    "window": "2022-2024",
+    "top_actors": [
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 599.99,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm1165110",
+        "name": "Chris Hemsworth",
+        "professions": [
+          "actor",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 587.75,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0425005",
+        "name": "Dwayne Johnson",
+        "professions": [
+          "actor",
+          "producer",
+          "writer"
+        ],
+        "score": 584.74,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2024,
+    "window": "2023-2025",
+    "top_actors": [
+      {
+        "nconst": "nm1297015",
+        "name": "Emma Stone",
+        "professions": [
+          "actress",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 605.61,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm0695435",
+        "name": "Chris Pratt",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 583.54,
+        "movies_in_window": 6
+      },
+      {
+        "nconst": "nm3154303",
+        "name": "Timoth\u00e9e Chalamet",
+        "professions": [
+          "actor",
+          "producer",
+          "music_department"
+        ],
+        "score": 570.68,
+        "movies_in_window": 4
+      }
+    ]
+  },
+  {
+    "year": 2025,
+    "window": "2024-2026",
+    "top_actors": [
+      {
+        "nconst": "nm3154303",
+        "name": "Timoth\u00e9e Chalamet",
+        "professions": [
+          "actor",
+          "producer",
+          "music_department"
+        ],
+        "score": 563.42,
+        "movies_in_window": 4
+      },
+      {
+        "nconst": "nm0000234",
+        "name": "Charlize Theron",
+        "professions": [
+          "producer",
+          "actress",
+          "costume_designer"
+        ],
+        "score": 524.52,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm1297015",
+        "name": "Emma Stone",
+        "professions": [
+          "actress",
+          "producer",
+          "soundtrack"
+        ],
+        "score": 521.14,
+        "movies_in_window": 5
+      }
+    ]
+  },
+  {
+    "year": 2026,
+    "window": "2025-2027",
+    "top_actors": [
+      {
+        "nconst": "nm0000234",
+        "name": "Charlize Theron",
+        "professions": [
+          "producer",
+          "actress",
+          "costume_designer"
+        ],
+        "score": 524.52,
+        "movies_in_window": 5
+      },
+      {
+        "nconst": "nm0474774",
+        "name": "Akshay Kumar",
+        "professions": [
+          "producer",
+          "writer",
+          "actor"
+        ],
+        "score": 468.89,
+        "movies_in_window": 8
+      },
+      {
+        "nconst": "nm0222426",
+        "name": "Ajay Devgn",
+        "professions": [
+          "actor",
+          "producer",
+          "miscellaneous"
+        ],
+        "score": 460.03,
+        "movies_in_window": 8
+      }
+    ]
+  }
+]

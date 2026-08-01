@@ -9,7 +9,8 @@ This document outlines high-impact data mining metrics, graph analytics, statist
 
 | Metric Category | Formula / Definition | Project Application & Analytical Value |
 | :--- | :--- | :--- |
-| **Shortest Path Median & Closeness Centrality** | $C(v) = \frac{N-1}{\sum_{u \neq v} d(v, u)}$ | **Top 5 Median Actors Tab**: Identifies actors with the minimum total shortest path distance to all other connected actors in Hollywood. |
+| **Shortest Path Median & Top Popular Actors** | $C(v) = \frac{N-1}{\sum_{u \neq v} d(v, u)}$ | **Top 5 Median Actors Tab**: Identifies actors with the minimum total shortest path distance to all other connected actors in Hollywood. This tab also evaluates full network & shortest path statistics for the **5 most popular actors** in that time window for comparative analysis. |
+| **Actor Popularity Score** | $P(a, W) = 10 \times \sum_{i=1}^{3} \max^{(i)} \left( \frac{\log_{2}(1 + |\text{Cast}|) \times \log_{10}(1 + \text{numVotes})}{\text{ordering}_{a, m}} \right)$ | Quantifies an actor's true Hollywood impact by evaluating their **Top 3 Best Roles**. It utilizes actual movie success (via `numVotes` from `title.ratings.tsv`) and production scale (Cast Size), aggressively filtering out background actors via the billing rank divisor (`ordering`). |
 | **Distance Normal Distribution Parameters** | $\mu = \text{Mean}(d), \quad \sigma = \sqrt{\frac{1}{N}\sum(d_i - \mu)^2}, \quad \sigma^2$ | Quantifies how tightly or broadly an actor is situated relative to the rest of the network. High $\sigma$ indicates uneven distribution across peripheral sub-networks. |
 | **Network Radius & Eccentricity (Max Hops)** | $E(v) = \max_{u} d(v, u)$ | Measures the maximum number of co-star hops required to reach the furthest actor in the connected component. |
 | **Hop Distance Breakdown (Histogram)** | $P(h) = \frac{|\{u \mid d(v, u) = h\}|}{N} \times 100\%$ | Provides a percentage breakdown of actors accessible at 1 hop (direct co-stars), 2 hops, 3 hops, 4 hops, and 5+ hops. |
@@ -37,6 +38,7 @@ This document outlines high-impact data mining metrics, graph analytics, statist
 | Metric / Dimension | Implementation Strategy | Insights Provided |
 | :--- | :--- | :--- |
 | **Dual-Way Temporal Filtering** | `created_before` $\le X$ AND `active_after` $\ge Y$ | Allows slicing the network across specific eras (e.g., Golden Age 1930–1960 vs. Modern Era 2000–2026). |
+| **Time-Axis 3 Most Popular Actors Tab** | Sliding Window $W = [Y-1, Y+1]$ | Calculates actor popularity scores for each year's sliding window to reveal the **3 most popular actors** over time, mapping their peak career influence across eras. |
 | **Community Stability over Time** | Jaccard index between community partitions across decades | Evaluates whether actor communities persist across time or dissolve as cinema trends shift. |
 | **Career Collaboration Span** | $\text{Span} = \text{LatestMovieYear} - \text{FirstMovieYear}$ | Measures an actor's active temporal span alongside their cumulative degree growth. |
 

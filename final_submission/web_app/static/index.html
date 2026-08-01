@@ -32,6 +32,7 @@
   <nav class="app-tabs">
     <button class="tab-btn active" data-target="community-view">Community Explorer</button>
     <button class="tab-btn" data-target="median-view">Top 5 Median Actors</button>
+    <button class="tab-btn" data-target="timeline-view">Time-Axis Popular Actors</button>
   </nav>
 
   <div id="community-view" class="tab-pane active">
@@ -159,7 +160,46 @@
         <!-- Results will be injected here -->
       </div>
     </section>
+
+    <section>
+      <div class="section-title" style="margin-top: 40px;">
+        <span style="color: #fb923c;">🌟 The Kevin Bacon Benchmark 🌟</span>
+      </div>
+      <div id="kevin-bacon-container" class="community-grid">
+        <!-- Results will be injected here -->
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title" style="margin-top: 40px;">
+        <span>Top 5 Most Popular Actors (Network Scale & Role Weight)</span>
+      </div>
+      <div id="popular-results-grid" class="community-grid">
+        <!-- Results will be injected here -->
+      </div>
+    </section>
   </div> <!-- end median-view -->
+
+  <div id="timeline-view" class="tab-pane">
+    <section class="controls-panel">
+      <div class="control-group" style="flex: 2;">
+        <div class="control-label">
+          <span>Target Year (Sliding Window: Y-1 to Y+1)</span>
+          <span id="timeline-year-value" class="slider-val">2000</span>
+        </div>
+        <input type="range" id="timeline-year-slider" min="1920" max="2026" value="2000" step="1">
+      </div>
+    </section>
+    
+    <section>
+      <div class="section-title">
+        <span>Top 3 Most Popular Actors for <span id="timeline-display-year">2000</span></span>
+      </div>
+      <div id="timeline-results-grid" class="community-grid">
+        <!-- Results will be injected here -->
+      </div>
+    </section>
+  </div> <!-- end timeline-view -->
 
   <!-- Full-Screen Community Inspector Modal -->
   <div id="community-modal" class="modal-overlay">

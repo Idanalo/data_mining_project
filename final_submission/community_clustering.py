@@ -7,6 +7,7 @@ import argparse
 import json
 import time
 import math
+from popularity_calculator import PopularityCalculator
 
 # Paths
 base_dir = (Path(__file__).parent / "..").resolve()
@@ -41,6 +42,8 @@ class CommunityClusterer:
         self.edges_path = Path(edges_path) if edges_path else edges_file_path
         self.names_path = Path(names_path) if names_path else names_file_path
         self.titles_path = Path(titles_path) if titles_path else titles_file_path
+        
+        self.popularity_calculator = None
         
         self.actor_names_cache = {}
         self.actor_professions_cache = {}
@@ -782,9 +785,27 @@ class CommunityClusterer:
         lcc_nodes = max(nx.connected_components(G), key=len)
         subG = G.subgraph(lcc_nodes)
         
+        # Calculate popularity scores for the window
+        if self.popularity_calculator is None:
+            self.popularity_calculator = PopularityCalculator(data_dir, processed_dir)
+        popular_actors = self.popularity_calculator.calculate_popularity_in_window(
+            start_year or 1920, end_year or 2026, top_k=5
+        )
+        popular_nconsts = [pa["nconst"] for pa in popular_actors]
+        
         # Candidate pre-filtering: pick top candidate_count nodes by degree
         degrees = dict(subG.degree())
         candidates = sorted(degrees.keys(), key=lambda x: degrees[x], reverse=True)[:candidate_count]
+        
+        # Add top popular actors to candidates list if they aren't already there
+        for pop_nconst in popular_nconsts:
+            if pop_nconst not in candidates and pop_nconst in subG:
+                candidates.append(pop_nconst)
+                
+        # Force Kevin Bacon into candidates
+        kevin_bacon_id = "nm0000102"
+        if kevin_bacon_id not in candidates and kevin_bacon_id in subG:
+            candidates.append(kevin_bacon_id)
         
         # Optimize BFS: If component is large (>10k nodes), prune degree-1 leaf nodes for BFS traversal
         # Leaf nodes increase graph size by 80%+ without altering relative shortest path rankings among central hubs
@@ -843,6 +864,7 @@ class CommunityClusterer:
         
         # Fetch metadata
         top_nconsts = [item["nconst"] for item in top_medians]
+        top_nconsts.append(kevin_bacon_id)
         self.fetch_metadata_for_targets(top_nconsts, [])
         
         results = []
@@ -873,8 +895,29 @@ class CommunityClusterer:
             "nodes_in_component": len(lcc_nodes),
             "total_nodes": G.number_of_nodes(),
             "execution_time_seconds": round(elapsed, 2),
-            "top_medians": results
+            "top_medians": results,
+            "top_popular": [],
+            "kevin_bacon": None
         }
+        
+        for item in median_scores:
+            if item["nconst"] in popular_nconsts:
+                pop_idx = popular_nconsts.index(item["nconst"])
+                pop_info = popular_actors[pop_idx]
+                item_copy = dict(item)
+                item_copy["name"] = self.actor_names_cache.get(item["nconst"], pop_info["name"])
+                item_copy["professions"] = self.actor_professions_cache.get(item["nconst"], pop_info.get("professions", []))
+                item_copy["popularity_score"] = pop_info["score"]
+                item_copy["movies_in_window"] = pop_info["movies_in_window"]
+                res_payload["top_popular"].append(item_copy)
+                
+            if item["nconst"] == kevin_bacon_id:
+                kb_copy = dict(item)
+                kb_copy["name"] = self.actor_names_cache.get(kevin_bacon_id, "Kevin Bacon")
+                kb_copy["professions"] = self.actor_professions_cache.get(kevin_bacon_id, ["actor"])
+                res_payload["kevin_bacon"] = kb_copy
+                
+        res_payload["top_popular"].sort(key=lambda x: x["popularity_score"], reverse=True)
 
         self.median_cache[cache_key] = res_payload
         return res_payload
