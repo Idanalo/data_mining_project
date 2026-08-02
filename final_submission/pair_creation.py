@@ -127,7 +127,7 @@ def run_pair_creation(start_year=1800, end_year=2026, sample_limit=None):
     
     elapsed = time.time() - start_time
     print("\n" + "=" * 60)
-    print(f" SUCCESS: Exported {len(df_out):,} edges to {edges_output_path}")
+    print(f" SUCCESS: Exported {len(df_out):,} edges to {edges_output_path.name}")
     print(f" Total Execution Time: {elapsed:.2f} seconds")
     print("=" * 60 + "\n")
 

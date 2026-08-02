@@ -8,6 +8,8 @@ import time
 from pathlib import Path
 from community_clustering import CommunityClusterer
 
+script_dir = Path(__file__).parent
+
 def get_entropy(probabilities):
     entropy = 0
     for p in probabilities:
@@ -63,13 +65,14 @@ def generate_entropy_graph():
     plt.legend(fontsize=11)
     
     plt.tight_layout()
-    plt.savefig('entropy_graph.png', dpi=300)
+    plt.savefig(script_dir / 'entropy_graph.png', dpi=300)
     plt.close()
     print("Saved entropy_graph.png")
 
 def generate_popular_actors_timeline():
     print("Generating Popular Actors Timeline...")
-    with open('web_app/static/popular_actors_timeline.json', 'r', encoding='utf-8') as f:
+    json_path = script_dir / 'web_app' / 'static' / 'popular_actors_timeline.json'
+    with open(json_path, 'r', encoding='utf-8') as f:
         timeline = json.load(f)
         
     years = []
@@ -102,7 +105,7 @@ def generate_popular_actors_timeline():
     plt.ylabel('Popularity Score (Window [Y-1, Y+1])', fontsize=12)
     
     plt.tight_layout()
-    plt.savefig('popular_actors_timeline.png', dpi=300)
+    plt.savefig(script_dir / 'popular_actors_timeline.png', dpi=300)
     plt.close()
     print("Saved popular_actors_timeline.png")
 
@@ -171,7 +174,7 @@ def generate_median_comparison():
             ax.text(i, ax.patches[i].get_height()/2, row['Name'], color='white', ha='center', va='center', fontweight='bold', fontsize=10, rotation=90)
             
     plt.tight_layout()
-    plt.savefig('median_comparison.png', dpi=300)
+    plt.savefig(script_dir / 'median_comparison.png', dpi=300)
     plt.close()
     print("Saved median_comparison.png")
 

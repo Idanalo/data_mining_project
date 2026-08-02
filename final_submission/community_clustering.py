@@ -252,10 +252,12 @@ class CommunityClusterer:
             null_values=['\\N']
         )
         
+        print(f"[DEBUG] startYear min: {df_edges['startYear'].min()}, max: {df_edges['startYear'].max()}, nulls: {df_edges['startYear'].null_count()}")
         filtered = df_edges.filter(
             (pl.col('startYear') <= created_before) &
             (pl.col('weight') >= min_weight)
         )
+        print(f"[DEBUG] df_edges total: {len(df_edges):,}, filtered <= {created_before}: {len(filtered):,}")
         
         # Dual-way filtering: Check active after year
         if active_after > 1800:
@@ -263,7 +265,13 @@ class CommunityClusterer:
             valid_rows = []
             for row in filtered.iter_rows():
                 a1, a2, movies_str, start_yr, weight = row
-                movies = movies_str.split(',') if movies_str else []
+                # If the edge creation year itself falls in/after active_after, it's active!
+                if start_yr is not None and start_yr >= active_after:
+                    valid_rows.append(row)
+                    continue
+                
+                # Otherwise, check if any shared movie extends into the active window
+                movies = [m.strip('"').strip() for m in movies_str.split(',')] if movies_str else []
                 years = [self.movie_years_cache[m] for m in movies if m in self.movie_years_cache]
                 latest_yr = max(years) if years else (start_yr or 0)
                 if latest_yr >= active_after:
