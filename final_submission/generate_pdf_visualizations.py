@@ -19,8 +19,8 @@ def generate_entropy_graph():
     print("Generating Entropy Graph...")
     clusterer = CommunityClusterer()
     
-    windows = [(2000, 2004), (2005, 2009), (2010, 2014), (2015, 2019), (2020, 2024)]
-    window_labels = [f"{w[0]}-{w[1]}" for w in windows]
+    windows = [(1950, 1959), (1960, 1969), (1970, 1979), (1980, 1989), (1990, 1999), (2000, 2009), (2010, 2019)]
+    window_labels = [f"{w[0]}s" for w in windows]
     avg_geo_entropies = []
     avg_genre_entropies = []
     
@@ -176,7 +176,7 @@ def generate_median_comparison():
     print("Saved median_comparison.png")
 
 if __name__ == "__main__":
-    # generate_entropy_graph() # Already saved
+    generate_entropy_graph()
     generate_popular_actors_timeline()
     generate_median_comparison()
     print("All visualizations generated successfully.")
