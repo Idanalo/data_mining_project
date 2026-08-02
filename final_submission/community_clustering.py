@@ -252,12 +252,10 @@ class CommunityClusterer:
             null_values=['\\N']
         )
         
-        print(f"[DEBUG] startYear min: {df_edges['startYear'].min()}, max: {df_edges['startYear'].max()}, nulls: {df_edges['startYear'].null_count()}")
         filtered = df_edges.filter(
             (pl.col('startYear') <= created_before) &
             (pl.col('weight') >= min_weight)
         )
-        print(f"[DEBUG] df_edges total: {len(df_edges):,}, filtered <= {created_before}: {len(filtered):,}")
         
         # Dual-way filtering: Check active after year
         if active_after > 1800:
