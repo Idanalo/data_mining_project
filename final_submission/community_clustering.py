@@ -47,6 +47,7 @@ class CommunityClusterer:
         
         self.actor_names_cache = {}
         self.actor_professions_cache = {}
+        self.actor_birth_years_cache = {}
         self.movie_genres_cache = {}
         self.movie_titles_cache = {}
         self.median_cache = {}
@@ -55,22 +56,24 @@ class CommunityClusterer:
         """Lazily fetches metadata only for specified actors and movies to keep execution blazingly fast."""
         t0 = time.time()
         
-        # Fetch Actor names & professions for target nodes
+        # Fetch Actor names, birth years & professions for target nodes
         missing_nconsts = [n for n in target_nconsts if n not in self.actor_names_cache]
         if missing_nconsts and self.names_path.exists():
             names_df = pl.read_csv(
                 self.names_path,
                 separator='\t',
-                columns=['nconst', 'primaryName', 'primaryProfession'],
+                columns=['nconst', 'primaryName', 'birthYear', 'primaryProfession'],
                 quote_char=None,
-                schema_overrides={'nconst': pl.Utf8, 'primaryName': pl.Utf8, 'primaryProfession': pl.Utf8},
+                schema_overrides={'nconst': pl.Utf8, 'primaryName': pl.Utf8, 'birthYear': pl.Int32, 'primaryProfession': pl.Utf8},
                 null_values=['\\N']
             ).filter(pl.col('nconst').is_in(missing_nconsts))
             
             for row in names_df.iter_rows():
-                nconst, name, prof = row
+                nconst, name, byr, prof = row
                 if nconst:
                     self.actor_names_cache[nconst] = name or nconst
+                    if byr:
+                        self.actor_birth_years_cache[nconst] = byr
                     if prof:
                         profs = [p.strip() for p in prof.split(',') if p.strip()]
                         self.actor_professions_cache[nconst] = profs
@@ -380,6 +383,20 @@ class CommunityClusterer:
                 pct = round((count / node_count) * 100, 1)
                 profession_stats.append({"tag": prof, "count": count, "percentage": pct})
                 
+            # Birth Decade Distribution
+            decade_counter = Counter()
+            for actor_id in comm_nodes:
+                byr = self.actor_birth_years_cache.get(actor_id)
+                if byr and 1850 <= byr <= 2026:
+                    decade = f"{(byr // 10) * 10}s"
+                    decade_counter[decade] += 1
+                    
+            total_births = sum(decade_counter.values()) or 1
+            birth_decade_stats = [
+                {"decade": d, "count": cnt, "percentage": round((cnt / total_births) * 100, 1)}
+                for d, cnt in decade_counter.most_common(6)
+            ]
+                
             # Movie Genre Distribution
             genre_counter = Counter()
             community_movies = set()
@@ -425,6 +442,7 @@ class CommunityClusterer:
                 "geo_tag": geo_tag,
                 "top_actors": top_actors,
                 "profession_tags": profession_stats,
+                "birth_decade_tags": birth_decade_stats,
                 "top_genres": genre_stats,
                 "bridges": bridges
             })

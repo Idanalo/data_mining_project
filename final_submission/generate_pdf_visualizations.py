@@ -18,13 +18,15 @@ def get_entropy(probabilities):
     return entropy
 
 def generate_entropy_graph():
-    print("Generating Entropy Graph...")
+    print("Generating Entropy Graph (4 Dimensions: Geo, Genre, Profession, Generational)...")
     clusterer = CommunityClusterer()
     
     windows = [(1950, 1959), (1960, 1969), (1970, 1979), (1980, 1989), (1990, 1999), (2000, 2009), (2010, 2019)]
     window_labels = [f"{w[0]}s" for w in windows]
     avg_geo_entropies = []
     avg_genre_entropies = []
+    avg_prof_entropies = []
+    avg_gen_entropies = []
     
     for start_year, end_year in windows:
         print(f"Processing {start_year}-{end_year}...")
@@ -36,38 +38,53 @@ def generate_entropy_graph():
         
         geo_entropies = []
         genre_entropies = []
+        prof_entropies = []
+        gen_entropies = []
         
         for c in top_communities:
-            # Geo Entropy
+            # 1. Geo Entropy
             geo_tag = c.get("geo_tag", {})
             reg_dist = geo_tag.get("regional_distribution", [])
-            # reg_dist has items like {'region': 'US/Canada', 'percentage': 85.0}
-            probs = [item["percentage"] / 100.0 for item in reg_dist]
+            probs = [item["percentage"] / 100.0 for item in reg_dist if item.get("percentage")]
             geo_entropies.append(get_entropy(probs))
             
-            # Genre Entropy
+            # 2. Genre Entropy
             genre_stats = c.get("top_genres", [])
-            probs = [item["percentage"] / 100.0 for item in genre_stats]
+            probs = [item["percentage"] / 100.0 for item in genre_stats if item.get("percentage")]
             genre_entropies.append(get_entropy(probs))
+            
+            # 3. Profession Entropy
+            prof_stats = c.get("profession_tags", [])
+            probs = [item["percentage"] / 100.0 for item in prof_stats if item.get("percentage")]
+            prof_entropies.append(get_entropy(probs))
+            
+            # 4. Generational Entropy (Birth Decades)
+            gen_stats = c.get("birth_decade_tags", [])
+            probs = [item["percentage"] / 100.0 for item in gen_stats if item.get("percentage")]
+            gen_entropies.append(get_entropy(probs))
                 
         avg_geo_entropies.append(sum(geo_entropies) / len(geo_entropies) if geo_entropies else 0)
         avg_genre_entropies.append(sum(genre_entropies) / len(genre_entropies) if genre_entropies else 0)
+        avg_prof_entropies.append(sum(prof_entropies) / len(prof_entropies) if prof_entropies else 0)
+        avg_gen_entropies.append(sum(gen_entropies) / len(gen_entropies) if gen_entropies else 0)
         
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6.5))
     sns.set_theme(style="whitegrid")
     
-    plt.plot(window_labels, avg_geo_entropies, marker='o', linewidth=2.5, label='Geographic Entropy', color='#38bdf8')
-    plt.plot(window_labels, avg_genre_entropies, marker='s', linewidth=2.5, label='Genre Entropy', color='#fb923c')
+    plt.plot(window_labels, avg_geo_entropies, marker='o', linewidth=2.5, label='Geographic Diversity Entropy', color='#38bdf8')
+    plt.plot(window_labels, avg_genre_entropies, marker='s', linewidth=2.5, label='Genre Mix Entropy', color='#fb923c')
+    plt.plot(window_labels, avg_prof_entropies, marker='^', linewidth=2.5, label='Profession Diversity Entropy', color='#a855f7')
+    plt.plot(window_labels, avg_gen_entropies, marker='D', linewidth=2.5, label='Generational Age-Spread Entropy', color='#34d399')
     
-    plt.title('Average Entropy of Top 15 Hollywood Communities Over Time', fontsize=14, fontweight='bold', pad=15)
-    plt.xlabel('Decade', fontsize=12)
-    plt.ylabel('Shannon Entropy (Bits)', fontsize=12)
-    plt.legend(fontsize=11)
+    plt.title('Multi-Dimensional Community Entropy & Diversity Over Time (1950-2020)', fontsize=14, fontweight='bold', pad=15)
+    plt.xlabel('Decade Window', fontsize=12)
+    plt.ylabel('Shannon Entropy H(X) in Bits', fontsize=12)
+    plt.legend(fontsize=11, loc='upper left', frameon=True)
     
     plt.tight_layout()
     plt.savefig(script_dir / 'entropy_graph.png', dpi=300)
     plt.close()
-    print("Saved entropy_graph.png")
+    print("Saved 4-dimensional entropy_graph.png")
 
 def generate_popular_actors_timeline():
     print("Generating Popular Actors Timeline...")
