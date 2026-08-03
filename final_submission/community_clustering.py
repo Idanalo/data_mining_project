@@ -7,6 +7,7 @@ import argparse
 import json
 import time
 import math
+import requests
 from popularity_calculator import PopularityCalculator
 
 # Paths
@@ -48,9 +49,85 @@ class CommunityClusterer:
         self.actor_names_cache = {}
         self.actor_professions_cache = {}
         self.actor_birth_years_cache = {}
+        self.actor_country_cache = {}
         self.movie_genres_cache = {}
         self.movie_titles_cache = {}
         self.median_cache = {}
+        self._load_wikidata_country_cache()
+
+    def _load_wikidata_country_cache(self):
+        cache_file = Path(__file__).parent / "processed_data" / "wikidata_country_cache.json"
+        if cache_file.exists():
+            try:
+                with open(cache_file, 'r', encoding='utf-8') as f:
+                    self.actor_country_cache = json.load(f)
+            except Exception:
+                pass
+
+    def _save_wikidata_country_cache(self):
+        cache_file = Path(__file__).parent / "processed_data" / "wikidata_country_cache.json"
+        try:
+            cache_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(self.actor_country_cache, f, ensure_ascii=False)
+        except Exception:
+            pass
+
+    def map_country_to_region(self, country_name):
+        if not country_name or country_name == "Unknown":
+            return None
+        c_lower = country_name.lower()
+        if any(k in c_lower for k in ['united states', 'canada', 'puerto rico']):
+            return "North America"
+        elif any(k in c_lower for k in ['united kingdom', 'england', 'scotland', 'wales', 'northern ireland', 'ireland', 'great britain']):
+            return "United Kingdom & Ireland"
+        elif any(k in c_lower for k in ['france', 'germany', 'italy', 'spain', 'sweden', 'denmark', 'norway', 'netherlands', 'poland', 'austria', 'switzerland', 'belgium', 'greece', 'hungary', 'czech', 'czechoslovakia', 'finland', 'ussr', 'soviet union', 'russia', 'russian empire', 'yugoslavia', 'romania', 'turkey', 'ottoman']):
+            return "European Cinema"
+        elif any(k in c_lower for k in ['japan', 'china', 'korea', 'hong kong', 'taiwan', 'singapore']):
+            return "East Asian Cinema"
+        elif any(k in c_lower for k in ['india', 'pakistan', 'bangladesh', 'sri lanka', 'british raj']):
+            return "Bollywood & South Asia"
+        elif any(k in c_lower for k in ['mexico', 'brazil', 'argentina', 'colombia', 'chile', 'peru', 'portugal', 'cuba', 'venezuela', 'uruguay']):
+            return "Latin America & Iberia"
+        else:
+            return "Global & Festival Network"
+
+    def fetch_wikidata_nationalities(self, nconsts):
+        missing = [n for n in nconsts if n not in self.actor_country_cache]
+        if not missing:
+            return
+
+        batch_size = 50
+        url = 'https://query.wikidata.org/sparql'
+        headers = {'User-Agent': 'HollywoodDataMiningProject/1.0 (contact@huji.ac.il)'}
+
+        for i in range(0, len(missing), batch_size):
+            chunk = missing[i:i+batch_size]
+            values_str = " ".join(f'"{n}"' for n in chunk)
+            sparql_query = f"""
+            SELECT ?imdbId ?countryLabel WHERE {{
+              VALUES ?imdbId {{ {values_str} }}
+              ?person wdt:P345 ?imdbId .
+              ?person wdt:P27 ?country .
+              SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+            }}
+            """
+            try:
+                r = requests.get(url, params={'query': sparql_query, 'format': 'json'}, headers=headers, timeout=5)
+                if r.status_code == 200:
+                    data = r.json()
+                    for item in data.get('results', {}).get('bindings', []):
+                        nconst = item['imdbId']['value']
+                        country = item['countryLabel']['value']
+                        self.actor_country_cache[nconst] = country
+            except Exception as e:
+                pass
+
+            for n in chunk:
+                if n not in self.actor_country_cache:
+                    self.actor_country_cache[n] = "Unknown"
+
+        self._save_wikidata_country_cache()
 
     def fetch_metadata_for_targets(self, target_nconsts, target_tconsts):
         """Lazily fetches metadata only for specified actors and movies to keep execution blazingly fast."""
@@ -102,16 +179,20 @@ class CommunityClusterer:
 
     def infer_community_geography(self, top_actors, top_genres, community_movies):
         """
-        Analyzes actor names, movie titles, and genre distribution to tag the community
-        with a geographical profile (Region, Flag, Cinema Hub, Regional Distribution, and Summary).
+        Analyzes actor nationalities (via Wikidata SPARQL), actor names, movie titles, and genre distribution
+        to tag the community with a geographical profile (Region, Flag, Cinema Hub, Regional Distribution, and Summary).
         """
+        # Fetch Wikidata country/citizenship metadata only for top central actors (fast batch query)
+        top_nconsts = [a.get('nconst') for a in top_actors if a.get('nconst')]
+        self.fetch_wikidata_nationalities(top_nconsts)
+
         actor_names = [a.get('name', '') for a in top_actors]
         movie_titles = [self.movie_titles_cache.get(m, '') for m in list(community_movies)[:30]]
         genres = [g['genre'] for g in top_genres]
 
         # Scoring indicators
         scores = {
-            "North America": 12.0,  # Default baseline for Hollywood network
+            "North America": 0.0,
             "United Kingdom & Ireland": 0.0,
             "European Cinema": 0.0,
             "East Asian Cinema": 0.0,
@@ -119,6 +200,20 @@ class CommunityClusterer:
             "Latin America & Iberia": 0.0,
             "Global & Festival Network": 0.0
         }
+
+        # 1. Grounded Wikidata Country Resolution
+        known_wikidata_count = 0
+        for a in top_actors:
+            nconst = a.get('nconst')
+            country = self.actor_country_cache.get(nconst)
+            region = self.map_country_to_region(country)
+            if region:
+                scores[region] += 15.0
+                known_wikidata_count += 1
+
+        # 2. Fallback to keyword matching if Wikidata provided no country matches
+        if known_wikidata_count == 0:
+            scores["North America"] += 12.0  # Baseline fallback for Hollywood network
 
         # Check UK indicators
         uk_keywords = ['caine', 'connery', 'kingsley', 'mckellen', 'dench', 'smith', 'rickman', 'nighy', 'cumberbatch', 'winslet', 'mirren', 'stewart', 'fiennes', 'colman', 'grant', 'skarsgård', 'broadbent', 'bale', 'hardy', 'mirren']
