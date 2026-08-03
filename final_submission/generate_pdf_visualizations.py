@@ -195,8 +195,77 @@ def generate_median_comparison():
     plt.close()
     print("Saved median_comparison.png")
 
+def generate_median_comparison_1994():
+    print("Generating Median Actor Comparison (1900-1994: Six Degrees Era)...")
+    url = "http://127.0.0.1:8000/api/median_actors"
+    payload = {
+        "start_year": None,
+        "end_year": 1994,
+        "top_k": 5
+    }
+    
+    print("Requesting 1994 median data from backend...")
+    try:
+        res = requests.post(url, json=payload)
+        res.raise_for_status()
+        data = res.json()
+    except Exception as e:
+        print(f"Failed to get 1994 data from API, running fallback calculation: {e}")
+        try:
+            clusterer = CommunityClusterer()
+            data = clusterer.calculate_median_actors(start_year=None, end_year=1994, top_k=5)
+        except Exception as ex:
+            print(f"Fallback failed: {ex}")
+            return
+        
+    top_median = data["top_medians"][0] if data.get("top_medians") else None
+    top_popular = data["top_popular"][0] if data.get("top_popular") else None
+    kevin = data.get("kevin_bacon")
+    
+    if not (top_median and top_popular and kevin):
+        print("Missing required actor data for 1994 comparison.")
+        return
+        
+    actors = [
+        {"Category": "True Median (Network Center)", "Name": top_median["name"], "Closeness": top_median["closeness"], "Avg Path": top_median["avg_path"], "Co-Stars": top_median["direct_co_stars"]},
+        {"Category": "Most Popular (1994 Era)", "Name": top_popular["name"], "Closeness": top_popular["closeness"], "Avg Path": top_popular["avg_path"], "Co-Stars": top_popular["direct_co_stars"]},
+        {"Category": "The Benchmark", "Name": kevin["name"], "Closeness": kevin["closeness"], "Avg Path": kevin["avg_path"], "Co-Stars": kevin["direct_co_stars"]}
+    ]
+    
+    df = pd.DataFrame(actors)
+    
+    fig, axes = plt.subplots(1, 3, figsize=(15, 6))
+    fig.suptitle('Actor Centrality Comparison (Six Degrees Era: 1900-1994)', fontsize=16, fontweight='bold')
+    
+    colors = ['#34d399', '#38bdf8', '#fb923c']
+    
+    sns.barplot(ax=axes[0], data=df, x='Category', y='Closeness', palette=colors)
+    axes[0].set_title('Closeness Centrality (Higher is Better)')
+    axes[0].set_ylabel('Closeness')
+    axes[0].tick_params(axis='x', rotation=15)
+    
+    sns.barplot(ax=axes[1], data=df, x='Category', y='Avg Path', palette=colors)
+    axes[1].set_title('Average Path Length μ (Lower is Better)')
+    axes[1].set_ylabel('Degrees of Separation')
+    axes[1].tick_params(axis='x', rotation=15)
+    
+    sns.barplot(ax=axes[2], data=df, x='Category', y='Co-Stars', palette=colors)
+    axes[2].set_title('Direct Co-Stars (1-Hop Reach)')
+    axes[2].set_ylabel('Count')
+    axes[2].tick_params(axis='x', rotation=15)
+    
+    for ax in axes:
+        for i, row in df.iterrows():
+            ax.text(i, ax.patches[i].get_height()/2, row['Name'], color='white', ha='center', va='center', fontweight='bold', fontsize=10, rotation=90)
+            
+    plt.tight_layout()
+    plt.savefig(script_dir / 'median_comparison_1994.png', dpi=300)
+    plt.close()
+    print("Saved median_comparison_1994.png")
+
 if __name__ == "__main__":
     generate_entropy_graph()
     generate_popular_actors_timeline()
     generate_median_comparison()
+    generate_median_comparison_1994()
     print("All visualizations generated successfully.")
