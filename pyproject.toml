@@ -1,0 +1,18 @@
+[project]
+name = "hollywood-actor-network"
+version = "0.1.0"
+description = "Actor co-starring network analysis, temporal community clustering, and dashboard over IMDb data"
+readme = "README.markdown"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "polars",
+    "networkx",
+    "requests",
+    "matplotlib",
+    "seaborn",
+    "python-docx",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic",
+]
