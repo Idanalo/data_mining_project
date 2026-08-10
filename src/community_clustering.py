@@ -2,11 +2,12 @@ import polars as pl
 import networkx as nx
 import networkx.algorithms.community as nx_comm
 from pathlib import Path
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, OrderedDict
 import argparse
 import json
 import time
 import math
+import threading
 import requests
 from popularity_calculator import PopularityCalculator
 
@@ -53,6 +54,11 @@ class CommunityClusterer:
         self.movie_genres_cache = {}
         self.movie_titles_cache = {}
         self.median_cache = {}
+        self.cluster_result_cache = {}
+        self.edges_df_cache = None
+        self.graph_cache = OrderedDict()  # LRU: a full clustered graph is several GB, keep only the latest
+        self.graph_cache_size = 1
+        self._heavy_lock = threading.RLock()
         self._load_wikidata_country_cache()
 
     def _load_wikidata_country_cache(self):
@@ -112,20 +118,25 @@ class CommunityClusterer:
               SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
             }}
             """
+            batch_succeeded = False
             try:
-                r = requests.get(url, params={'query': sparql_query, 'format': 'json'}, headers=headers, timeout=5)
+                r = requests.get(url, params={'query': sparql_query, 'format': 'json'}, headers=headers, timeout=15)
                 if r.status_code == 200:
                     data = r.json()
                     for item in data.get('results', {}).get('bindings', []):
                         nconst = item['imdbId']['value']
                         country = item['countryLabel']['value']
                         self.actor_country_cache[nconst] = country
-            except Exception as e:
+                    batch_succeeded = True
+            except Exception:
                 pass
 
-            for n in chunk:
-                if n not in self.actor_country_cache:
-                    self.actor_country_cache[n] = "Unknown"
+            # Only cache "Unknown" when Wikidata answered and genuinely had no entry;
+            # a failed/timed-out batch must stay uncached so it gets retried next run.
+            if batch_succeeded:
+                for n in chunk:
+                    if n not in self.actor_country_cache:
+                        self.actor_country_cache[n] = "Unknown"
 
         self._save_wikidata_country_cache()
 
@@ -216,14 +227,14 @@ class CommunityClusterer:
             scores["North America"] += 12.0  # Baseline fallback for Hollywood network
 
         # Check UK indicators
-        uk_keywords = ['caine', 'connery', 'kingsley', 'mckellen', 'dench', 'smith', 'rickman', 'nighy', 'cumberbatch', 'winslet', 'mirren', 'stewart', 'fiennes', 'colman', 'grant', 'skarsgård', 'broadbent', 'bale', 'hardy', 'mirren']
+        uk_keywords = ['caine', 'connery', 'kingsley', 'mckellen', 'dench', 'smith', 'rickman', 'nighy', 'cumberbatch', 'winslet', 'mirren', 'stewart', 'fiennes', 'colman', 'grant', 'skarsgård', 'broadbent', 'bale', 'hardy']
         for name in actor_names:
             name_lower = name.lower()
             if any(k in name_lower for k in uk_keywords) or 'sir ' in name_lower or 'dame ' in name_lower:
                 scores["United Kingdom & Ireland"] += 15.0
 
         # Check European indicators
-        eu_keywords = ['jean', 'pierre', 'francois', 'mastroianni', 'loren', 'morricone', 'fellini', 'depardieu', 'deneuve', 'huppert', 'cotillard', 'cassard', 'herzog', 'wenders', 'almodovar', 'bardem', 'cruz', 'skarsgard', 'mikkelsen', 'von trio']
+        eu_keywords = ['jean', 'pierre', 'francois', 'mastroianni', 'loren', 'morricone', 'fellini', 'depardieu', 'deneuve', 'huppert', 'cotillard', 'cassard', 'herzog', 'wenders', 'almodovar', 'bardem', 'cruz', 'skarsgard', 'mikkelsen', 'von trier']
         for name in actor_names:
             name_lower = name.lower()
             if any(k in name_lower for k in eu_keywords):
@@ -329,6 +340,102 @@ class CommunityClusterer:
             else:
                 self.movie_years_cache = {}
 
+    def _load_edges_df(self):
+        """Loads the full edge list into memory once; every request reuses the cached DataFrame."""
+        with self._heavy_lock:
+            if self.edges_df_cache is None:
+                t0 = time.time()
+                self.edges_df_cache = pl.read_csv(
+                    self.edges_path,
+                    separator='\t',
+                    columns=['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'],
+                    quote_char=None,
+                    schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'shared_movies': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
+                    null_values=['\\N']
+                )
+                print(f"[Clustering Engine] Cached edge list in memory ({len(self.edges_df_cache):,} rows) in {time.time() - t0:.2f}s")
+            return self.edges_df_cache
+
+    def _ensure_latest_year_column(self):
+        """Precomputes each edge's latest shared-movie year so the active_after filter is a vectorized
+        column comparison instead of a Python loop over millions of rows."""
+        with self._heavy_lock:
+            df = self._load_edges_df()
+            if 'latest_year' in df.columns:
+                return
+            t0 = time.time()
+            self.ensure_title_years_cache()
+            years_df = pl.DataFrame({
+                'tconst': list(self.movie_years_cache.keys()),
+                'movie_year': list(self.movie_years_cache.values()),
+            })
+            edges = df.with_row_index('eid')
+            latest = (
+                edges.select(['eid', 'shared_movies'])
+                .with_columns(pl.col('shared_movies').str.split(','))
+                .explode('shared_movies')
+                .with_columns(pl.col('shared_movies').str.strip_chars('" '))
+                .join(years_df, left_on='shared_movies', right_on='tconst', how='left')
+                .group_by('eid')
+                .agg(pl.col('movie_year').max().alias('latest_year'))
+            )
+            self.edges_df_cache = (
+                edges.join(latest, on='eid', how='left')
+                .with_columns(pl.coalesce([pl.col('latest_year'), pl.col('startYear')]).alias('latest_year'))
+                .drop('eid')
+            )
+            print(f"[Clustering Engine] Precomputed per-edge latest active year in {time.time() - t0:.2f}s")
+
+    def _load_filtered_edge_rows(self, created_before, active_after, min_weight):
+        """Applies the dual-way temporal filter (created_before & active_after) on the in-memory edge list.
+        Shared by run_clustering and get_community_graph_details so both paths filter identically."""
+        if active_after > 1800:
+            self._ensure_latest_year_column()
+        df = self._load_edges_df()
+
+        condition = (pl.col('startYear') <= created_before) & (pl.col('weight') >= min_weight)
+        if active_after > 1800:
+            condition = condition & (pl.col('latest_year') >= active_after)
+
+        filtered = df.filter(condition).select(['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'])
+        return list(filtered.iter_rows())
+
+    def _get_clustered_graph(self, created_before, active_after, min_weight):
+        """Builds (or returns the LRU-cached) filtered graph plus its sorted Louvain partition.
+        Sharing this between run_clustering and get_community_graph_details means 'Open Community'
+        reuses the exact partition the summary was built from, so community IDs always line up."""
+        key = (created_before, active_after, min_weight)
+        with self._heavy_lock:
+            if key in self.graph_cache:
+                self.graph_cache.move_to_end(key)
+                return self.graph_cache[key]
+
+            valid_rows = self._load_filtered_edge_rows(created_before, active_after, min_weight)
+            print(f"  -> Extracted {len(valid_rows):,} edges created <= {created_before} & active >= {active_after}")
+            if not valid_rows:
+                return None
+
+            G = nx.Graph()
+            for a1, a2, movies_str, year, weight in valid_rows:
+                G.add_edge(a1, a2, weight=weight, movies=movies_str.split(',') if movies_str else [])
+
+            print(f"  -> Built Graph: {G.number_of_nodes():,} nodes (actors), {G.number_of_edges():,} edges")
+            print("  -> Running Louvain Community Detection...")
+            try:
+                communities_raw = nx_comm.louvain_communities(G, weight='weight', seed=42)
+            except Exception as e:
+                print(f"  -> Louvain fallback to greedy modularity: {e}")
+                communities_raw = list(nx_comm.greedy_modularity_communities(G, weight='weight'))
+
+            modularity_score = nx_comm.modularity(G, communities_raw, weight='weight')
+            print(f"  -> Detected {len(communities_raw):,} total communities (Modularity: {modularity_score:.4f})")
+
+            entry = (G, sorted(communities_raw, key=len, reverse=True), modularity_score, len(communities_raw))
+            self.graph_cache[key] = entry
+            while len(self.graph_cache) > self.graph_cache_size:
+                self.graph_cache.popitem(last=False)
+            return entry
+
     def run_clustering(self, created_before=2026, active_after=1800, min_weight=1, max_communities=15, min_community_size=3, target_year=None):
         """
         Filters edges created on or before `created_before` AND active with a movie on or after `active_after`.
@@ -339,71 +446,18 @@ class CommunityClusterer:
 
         t0 = time.time()
         print(f"\n[Clustering Engine] Processing Graph: Created <= {created_before}, Active >= {active_after} (Min Weight: {min_weight})...")
-        
-        # 1. Temporal Edge Filtering using Polars
-        df_edges = pl.read_csv(
-            self.edges_path,
-            separator='\t',
-            columns=['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'],
-            quote_char=None,
-            schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'shared_movies': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
-            null_values=['\\N']
-        )
-        
-        filtered = df_edges.filter(
-            (pl.col('startYear') <= created_before) &
-            (pl.col('weight') >= min_weight)
-        )
-        
-        # Dual-way filtering: Check active after year
-        if active_after > 1800:
-            self.ensure_title_years_cache()
-            valid_rows = []
-            for row in filtered.iter_rows():
-                a1, a2, movies_str, start_yr, weight = row
-                # If the edge creation year itself falls in/after active_after, it's active!
-                if start_yr is not None and start_yr >= active_after:
-                    valid_rows.append(row)
-                    continue
-                
-                # Otherwise, check if any shared movie extends into the active window
-                movies = [m.strip('"').strip() for m in movies_str.split(',')] if movies_str else []
-                years = [self.movie_years_cache[m] for m in movies if m in self.movie_years_cache]
-                latest_yr = max(years) if years else (start_yr or 0)
-                if latest_yr >= active_after:
-                    valid_rows.append(row)
-        else:
-            valid_rows = list(filtered.iter_rows())
 
-        total_filtered_edges = len(valid_rows)
-        print(f"  -> Extracted {total_filtered_edges:,} edges created <= {created_before} & active >= {active_after}")
-        
-        if total_filtered_edges == 0:
+        result_key = (created_before, active_after, min_weight, max_communities, min_community_size)
+        if result_key in self.cluster_result_cache:
+            print(f"[Clustering Engine] Returning cached clustering result for {result_key}")
+            return self.cluster_result_cache[result_key]
+
+        # 1-3. Temporal edge filtering, graph build & Louvain partition (LRU-cached)
+        cached = self._get_clustered_graph(created_before, active_after, min_weight)
+        if cached is None:
             return {"error": f"No edges found for created <= {created_before} and active >= {active_after} with min weight {min_weight}"}
+        G, communities_sorted, modularity_score, total_communities_found = cached
 
-        # 2. Build NetworkX Graph
-        G = nx.Graph()
-        for row in valid_rows:
-            a1, a2, movies_str, year, weight = row
-            G.add_edge(a1, a2, weight=weight, movies=movies_str.split(',') if movies_str else [])
-            
-        print(f"  -> Built Graph: {G.number_of_nodes():,} nodes (actors), {G.number_of_edges():,} edges")
-        
-        # 3. Community Detection (Louvain)
-        print("  -> Running Louvain Community Detection...")
-        try:
-            communities_raw = nx_comm.louvain_communities(G, weight='weight', seed=42)
-        except Exception as e:
-            print(f"  -> Louvain fallback to greedy modularity: {e}")
-            communities_raw = list(nx_comm.greedy_modularity_communities(G, weight='weight'))
-            
-        # Calculate overall graph modularity
-        modularity_score = nx_comm.modularity(G, communities_raw, weight='weight')
-        print(f"  -> Detected {len(communities_raw):,} total communities (Modularity: {modularity_score:.4f})")
-
-        # Sort communities by size descending
-        communities_sorted = sorted(communities_raw, key=len, reverse=True)
-        
         # Filter communities with size >= min_community_size
         valid_communities = [c for c in communities_sorted if len(c) >= min_community_size]
         selected_communities = valid_communities[:max_communities]
@@ -454,7 +508,7 @@ class CommunityClusterer:
             
             # Top connected actors in this community
             degrees = dict(subG.degree(weight='weight'))
-            top_actors_ids = sorted(degrees.keys(), key=lambda x: degrees[x], reverse=True)[:10]
+            top_actors_ids = sorted(degrees.keys(), key=lambda x: (-degrees[x], x))[:10]
             
             top_actors = [
                 {
@@ -562,13 +616,14 @@ class CommunityClusterer:
             "min_weight": min_weight,
             "total_nodes": G.number_of_nodes(),
             "total_edges": G.number_of_edges(),
-            "total_communities_found": len(communities_raw),
+            "total_communities_found": total_communities_found,
             "modularity_score": round(modularity_score, 4),
             "execution_time_seconds": round(elapsed, 2),
             "communities": community_details,
             "inter_community_matrix": matrix_list
         }
-        
+
+        self.cluster_result_cache[result_key] = result
         print(f"[Clustering Engine] Completed analysis in {elapsed:.2f}s")
         return result
 
@@ -590,40 +645,14 @@ class CommunityClusterer:
         if not target_comm:
             return {"error": f"Community {community_id} not found."}
             
-        # Re-run temporal graph filtering to extract sub-graph nodes and edges
-        df_edges = pl.read_csv(
-            self.edges_path,
-            separator='\t',
-            columns=['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'],
-            quote_char=None,
-            schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'shared_movies': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
-            null_values=['\\N']
-        )
-        filtered = df_edges.filter(
-            (pl.col('startYear') <= created_before) &
-            (pl.col('weight') >= min_weight)
-        )
-        
-        if active_after > 1800:
-            self.ensure_title_years_cache()
-            valid_rows = []
-            for row in filtered.iter_rows():
-                a1, a2, movies_str, start_yr, weight = row
-                movies = movies_str.split(',') if movies_str else []
-                years = [self.movie_years_cache[m] for m in movies if m in self.movie_years_cache]
-                latest_yr = max(years) if years else (start_yr or 0)
-                if latest_yr >= active_after:
-                    valid_rows.append(row)
-        else:
-            valid_rows = list(filtered.iter_rows())
+        # Reuse the cached filtered graph + Louvain partition the summary was built from,
+        # so the sub-graph is extracted from the exact same communities (no re-read, no re-clustering)
+        cached = self._get_clustered_graph(created_before, active_after, min_weight)
+        if cached is None:
+            return {"error": "No edges found for the requested filters."}
+        G, communities_sorted, _, _ = cached
 
-        G = nx.Graph()
-        for row in valid_rows:
-            a1, a2, movies_str, year, weight = row
-            G.add_edge(a1, a2, weight=weight)
-            
-        communities_raw = sorted(nx_comm.louvain_communities(G, weight='weight', seed=42), key=len, reverse=True)
-        valid_communities = [c for c in communities_raw if len(c) >= 3][:20]
+        valid_communities = [c for c in communities_sorted if len(c) >= 3][:20]
         
         if community_id > len(valid_communities):
             return {"error": "Invalid community index"}
@@ -633,7 +662,8 @@ class CommunityClusterer:
         # Sort nodes by degree within community to pick top max_nodes
         subG = G.subgraph(comm_nodes)
         degrees = dict(subG.degree(weight='weight'))
-        selected_nodes = sorted(comm_nodes, key=lambda x: degrees[x], reverse=True)[:max_nodes]
+        # Tie-break by nconst so the selection is reproducible across runs (community sets are hash-ordered)
+        selected_nodes = sorted(comm_nodes, key=lambda x: (-degrees[x], x))[:max_nodes]
         selected_set = set(selected_nodes)
         
         subG_selected = G.subgraph(selected_set)
@@ -659,7 +689,7 @@ class CommunityClusterer:
             subG_inner = subG_selected.subgraph(sub_nodes_set)
             inner_degrees = dict(subG_inner.degree(weight='weight'))
 
-            top_sub_actors_ids = sorted(sub_node_list, key=lambda x: inner_degrees.get(x, 0), reverse=True)[:5]
+            top_sub_actors_ids = sorted(sub_node_list, key=lambda x: (-inner_degrees.get(x, 0), x))[:5]
             top_sub_actors = [
                 {
                     "nconst": actor_id,
@@ -730,7 +760,8 @@ class CommunityClusterer:
         professions = self.actor_professions_cache.get(nconst, [])
         birth_year = None
         known_titles = []
-        
+        found_in_names = False
+
         if self.names_path.exists():
             names_df = pl.read_csv(
                 self.names_path,
@@ -742,6 +773,7 @@ class CommunityClusterer:
             ).filter(pl.col('nconst') == nconst)
             
             if len(names_df) > 0:
+                found_in_names = True
                 row = names_df.row(0)
                 _, name, b_yr, prof, k_titles = row
                 if name: actor_name = name
@@ -752,18 +784,17 @@ class CommunityClusterer:
         if not actor_name:
             actor_name = nconst
             
-        # 2. Extract co-star edges from actor_edges.tsv
-        df_edges = pl.read_csv(
-            self.edges_path,
-            separator='\t',
-            columns=['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'],
-            quote_char=None,
-            schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'shared_movies': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
-            null_values=['\\N']
+        # 2. Extract co-star edges from the in-memory edge list
+        df_edges = self._load_edges_df()
+
+        actor_edges = (
+            df_edges.filter((pl.col('actor1') == nconst) | (pl.col('actor2') == nconst))
+            .select(['actor1', 'actor2', 'shared_movies', 'startYear', 'weight'])
         )
-        
-        actor_edges = df_edges.filter((pl.col('actor1') == nconst) | (pl.col('actor2') == nconst))
-        
+
+        if not found_in_names and len(actor_edges) == 0:
+            return {"error": f"Actor {nconst} not found in the dataset."}
+
         co_star_weights = Counter()
         all_movie_ids = set(known_titles)
         earliest_yr = 2026
@@ -875,16 +906,9 @@ class CommunityClusterer:
             return self.median_cache[cache_key]
 
         t0 = time.time()
-        
-        df_edges = pl.read_csv(
-            self.edges_path,
-            separator='\t',
-            columns=['actor1', 'actor2', 'startYear', 'weight'],
-            quote_char=None,
-            schema_overrides={'actor1': pl.Utf8, 'actor2': pl.Utf8, 'startYear': pl.Int32, 'weight': pl.Int32},
-            null_values=['\\N']
-        )
-        
+
+        df_edges = self._load_edges_df()
+
         filtered = df_edges
         if start_year is not None:
             filtered = filtered.filter(pl.col('startYear') >= start_year)
@@ -914,7 +938,7 @@ class CommunityClusterer:
         
         # Candidate pre-filtering: pick top candidate_count nodes by degree
         degrees = dict(subG.degree())
-        candidates = sorted(degrees.keys(), key=lambda x: degrees[x], reverse=True)[:candidate_count]
+        candidates = sorted(degrees.keys(), key=lambda x: (-degrees[x], x))[:candidate_count]
         
         # Add top popular actors to candidates list if they aren't already there
         for pop_nconst in popular_nconsts:
@@ -928,7 +952,8 @@ class CommunityClusterer:
         
         # Optimize BFS: If component is large (>10k nodes), prune degree-1 leaf nodes for BFS traversal
         # Leaf nodes increase graph size by 80%+ without altering relative shortest path rankings among central hubs
-        if len(lcc_nodes) > 10000:
+        leaf_pruning_applied = len(lcc_nodes) > 10000
+        if leaf_pruning_applied:
             core_nodes = set(n for n in lcc_nodes if degrees[n] >= 2 or n in candidates)
             bfs_G = subG.subgraph(core_nodes)
             lcc_count = len(core_nodes)
@@ -1012,6 +1037,12 @@ class CommunityClusterer:
             "start_year": start_year,
             "end_year": end_year,
             "nodes_in_component": len(lcc_nodes),
+            "bfs_nodes": lcc_count,
+            "leaf_pruning_applied": leaf_pruning_applied,
+            "approximation_note": (
+                f"Path statistics computed on the leaf-pruned core graph ({lcc_count:,} of {len(lcc_nodes):,} component nodes); "
+                "degree-1 actors are excluded, so absolute path lengths are slightly optimistic. Candidate rankings are unaffected."
+            ) if leaf_pruning_applied else None,
             "total_nodes": G.number_of_nodes(),
             "execution_time_seconds": round(elapsed, 2),
             "top_medians": results,

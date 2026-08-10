@@ -69,7 +69,7 @@ class PopularityCalculator:
             df_ratings = pl.read_csv(
                 self.ratings_path, separator='\t', ignore_errors=True,
                 columns=['tconst', 'numVotes'],
-                dtypes={'tconst': pl.Utf8, 'numVotes': pl.Int32}
+                schema_overrides={'tconst': pl.Utf8, 'numVotes': pl.Int32}
             )
             for row in df_ratings.iter_rows():
                 self.movie_votes[row[0]] = row[1] if row[1] else 0

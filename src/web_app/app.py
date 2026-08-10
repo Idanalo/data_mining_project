@@ -70,6 +70,8 @@ def run_clustering_endpoint(req: ClusterRequest):
         if "error" in results:
             raise HTTPException(status_code=400, detail=results["error"])
         return results
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -93,6 +95,8 @@ def get_community_details_endpoint(
         if "error" in res:
             raise HTTPException(status_code=404, detail=res["error"])
         return res
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -104,6 +108,8 @@ def get_actor_statistics_endpoint(nconst: str):
         if "error" in res:
             raise HTTPException(status_code=404, detail=res["error"])
         return res
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -119,6 +125,8 @@ def get_median_actors_endpoint(req: MedianRequest):
         if "error" in res:
             raise HTTPException(status_code=400, detail=res["error"])
         return res
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

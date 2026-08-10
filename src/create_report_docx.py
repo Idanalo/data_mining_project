@@ -210,7 +210,8 @@ def create_report():
     p.add_run("1994 Historical Test (Six Degrees Invention Era):\n").bold = True
     p.add_run(
         "To test whether Kevin Bacon was truly the mathematical center of Hollywood when the game was invented, we filtered the graph for all films up to 1994 (1900–1994). "
-        "We executed Breadth-First Search (BFS) graph traversals across the largest connected component to compute exact closeness centrality for the True Network Center, the Most Popular Actor of 1994, and Kevin Bacon."
+        "We executed Breadth-First Search (BFS) graph traversals across the largest connected component to compute closeness centrality for the True Network Center, the Most Popular Actor of 1994, and Kevin Bacon. "
+        "For tractability, path statistics are computed on the leaf-pruned core of the component (degree-1 actors excluded); this leaves candidate rankings unaffected but makes absolute path lengths slightly optimistic."
     )
 
     # Add Image: median_comparison_1994.png
@@ -243,7 +244,8 @@ def create_report():
     p.paragraph_format.line_spacing = 1.15
     p.add_run("Modern All-Time Test (1900–2026 Network):\n").bold = True
     p.add_run(
-        "We re-ran the BFS shortest-path centrality analysis across the complete modern graph consisting of over 15.6 million edge pairs and 866,000 connected actors."
+        "We re-ran the BFS shortest-path centrality analysis across the complete modern graph consisting of over 15.6 million edge pairs and 866,000 connected actors "
+        "(path statistics again computed on the leaf-pruned core of the giant component)."
     )
 
     # Add Image: median_comparison.png
@@ -288,12 +290,12 @@ def create_report():
     p.paragraph_format.line_spacing = 1.15
     p.add_run("Popularity Calculation Methodology (popularity_calculator.py):\n").bold = True
     p.add_run(
-        "Measuring actor popularity across a century requires accounting for audience reception, film volume, and cast prominence. "
+        "Measuring actor popularity across a century requires accounting for audience reach, production scale, and cast prominence. "
         "We formulated a weighted True Impact Score for actor a in target year Y:\n"
-        "1. Rolling Window: Filtered films released in window [Y - 1, Y + 1] with vote count numVotes v >= 1000.\n"
-        "2. Film Impact Score: For each movie m, S_m = AverageRating * log10(numVotes).\n"
-        "3. Cast Position Weight: Applied position decay w_pos = 1.0 for top billed, 0.8 for second, 0.6 for third, etc.\n"
-        "4. Actor Yearly Score: Summed the Top 3 highest impact films for actor a in that window: Score(a, Y) = ∑ w_pos * S_m."
+        "1. Rolling Window: Filtered films (movies & TV movies) released in window [Y - 1, Y + 1].\n"
+        "2. Film Impact Score: For each movie m, S_m = log2(1 + CastSize) * log10(1 + numVotes), blending production scale with audience vote volume.\n"
+        "3. Cast Position Weight: Applied billing-order decay w_pos = 1 / ordering (1.0 for top billed, 0.5 for second, 0.33 for third, etc.), severely dampening minor roles.\n"
+        "4. Actor Yearly Score: Summed the Top 3 highest weighted role scores in the window (scaled ×10) to reward quality over quantity: Score(a, Y) = 10 · ∑ w_pos * S_m."
     )
 
     # Add Image: popular_actors_timeline.png
